@@ -196,6 +196,131 @@
   animation: fadeInUp 0.8s ease 0.8s both;
 }
 
+.bankGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.bankCard {
+  background: #fff;
+  border-radius: 28px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid #f3d8d0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bankCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.bankHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.bankIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--deep-red), var(--brick-red));
+  color: #fff;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.bankHeader h3 {
+  margin: 0;
+  color: var(--deep-red);
+  font-size: 1.2rem;
+}
+
+.bankHeader p {
+  margin: 0.2rem 0 0;
+  color: #8b6b63;
+  font-size: 0.9rem;
+}
+
+.bankBody {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.bankQrWrap {
+  background: #fff7f3;
+  border: 1px dashed #e8b8ab;
+  border-radius: 20px;
+  padding: 0.8rem;
+}
+
+.bankQr {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+}
+
+.bankInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bankLine {
+  background: #fff8f5;
+  border: 1px solid #f2ddd6;
+  border-radius: 16px;
+  padding: 0.85rem 1rem;
+}
+
+.bankLine span {
+  display: block;
+  font-size: 0.8rem;
+  color: #9c7b72;
+  margin-bottom: 0.25rem;
+}
+
+.bankLine strong {
+  color: #412822;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .bankGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bankCard {
+    padding: 1rem;
+    border-radius: 22px;
+  }
+
+  .bankBody {
+    grid-template-columns: 1fr;
+  }
+
+  .bankQrWrap {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .bankHeader h3 {
+    font-size: 1.05rem;
+  }
+}
+
 .btnPrimary, .btnOutline {
   display: inline-flex;
   align-items: center;
