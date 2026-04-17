@@ -47,7 +47,7 @@ export default function HomePage() {
   const [wishModalOpen, setWishModalOpen] = useState(false)
   const [wish, setWish] = useState({ fullName: '', message: '' })
   const [rsvp, setRsvp] = useState({
-    fullName: '',
+    guestName: '',
     email: '',
     attendingStatus: 'GOING',
     attendanceType: 'DIRECT',
@@ -164,7 +164,7 @@ export default function HomePage() {
   const submitRsvp = async (e) => {
     e.preventDefault()
 
-    if (!rsvp.fullName.trim()) {
+    if (!rsvp.guestName.trim()) {
       alert('Vui lòng nhập họ tên để xác nhận.')
       return
     }
@@ -173,14 +173,14 @@ export default function HomePage() {
       await api.post('/public/rsvp', rsvp)
 
       const messageMap = {
-        GOING: `🎉 Cảm ơn ${rsvp.fullName}, bạn đã xác nhận tham dự! Chúng tôi rất vui được gặp bạn.`,
-        MAYBE: `✨ Cảm ơn ${rsvp.fullName}, chúng tôi sẽ chờ tin bạn nhé.`,
-        NOT_GOING: `💌 Cảm ơn ${rsvp.fullName}, dù không thể tham dự nhưng tình cảm vẫn luôn trọn vẹn.`
+        GOING: `🎉 Cảm ơn ${rsvp.guestName}, bạn đã xác nhận tham dự! Chúng tôi rất vui được gặp bạn.`,
+        MAYBE: `✨ Cảm ơn ${rsvp.guestName}, chúng tôi sẽ chờ tin bạn nhé.`,
+        NOT_GOING: `💌 Cảm ơn ${rsvp.guestName}, dù không thể tham dự nhưng tình cảm vẫn luôn trọn vẹn.`
       }
 
       setFeedback(messageMap[rsvp.attendingStatus] || 'Đã gửi xác nhận thành công.')
       setRsvp({
-        fullName: '',
+        guestName: '',
         email: '',
         attendingStatus: 'GOING',
         attendanceType: 'DIRECT',
@@ -202,7 +202,7 @@ export default function HomePage() {
 
     try {
       await api.post('/public/wish', wish)
-      setWish({ fullName: '', message: '' })
+      setWish({ guestName: '', message: '' })
       setWishModalOpen(false)
       load()
       alert('Cảm ơn lời chúc tốt đẹp của bạn!')
