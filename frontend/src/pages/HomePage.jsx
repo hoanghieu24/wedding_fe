@@ -646,7 +646,7 @@ export default function HomePage() {
             <i className="fa-solid fa-camera" />
           </div>
           <p><i className="fa-solid fa-camera" /> #TrungTrangWedding</p>
-          <small>Made with <i className="fa-solid fa-heart" style={{ color: '#e74c3c' }} /> — Thiệp cưới đỏ sang trọng, tối ưu hiển thị mobile</small>
+          <small>Made with <i className="fa-solid fa-heart" style={{ color: '#e74c3c' }} /> — Hoàng Hiếu </small>
         </div>
       </footer>
 
