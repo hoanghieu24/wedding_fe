@@ -12,8 +12,8 @@ const defaultGallery = [
 ]
 
 const defaultMilestones = [
-  { year: '2025', icon: 'fa-solid fa-heart', text: 'Lần đầu gặp gỡ · Lời tỏ tình ngọt ngào bên Hồ Tây' },
-  { year: '2026', icon: 'fa-solid fa-ring', text: 'Đám cưới cổ tích · Lời thề trước gia đình và những người thân yêu' }
+  { year: '2025', icon: 'fa-solid fa-heart', text: 'Lần đầu gặp gỡ ' },
+  { year: '2026', icon: 'fa-solid fa-ring', text: 'Đám cưới cổ tích ' }
 ]
 
 const defaultSongs = [
