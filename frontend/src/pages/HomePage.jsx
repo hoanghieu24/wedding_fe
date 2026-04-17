@@ -550,7 +550,10 @@ export default function HomePage() {
                   GỬI LỜI XÁC NHẬN <i className="fa-solid fa-heart" />
                     
                 </button>
-               Đây là lời chúc riêng tư , muốn gửi lời mời công khai ở phía dưới nhaaaa <3
+                 <p className={styles.sectionSubtitle}>
+       Đây là lời chúc riêng tư , muốn gửi lời mời công khai ở phía dưới nhaaaa <3
+    </p>
+             
                 {feedback && <div className={styles.feedback}>{feedback}</div>}
               </form>
             </div>
