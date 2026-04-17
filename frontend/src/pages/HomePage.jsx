@@ -548,7 +548,7 @@ export default function HomePage() {
                       <i className="fa-solid fa-comment-dots" />
                     </div>
                     <div className={styles.wishContent}>
-                      <strong>{item.fullName || item.guestName || 'Khách mời'}</strong>
+                      <strong>{item.guestName || item.guestName || 'Khách mời'}</strong>
                       <p>{item.message}</p>
                       {item.createdAt && <small>{new Date(item.createdAt).toLocaleDateString('vi-VN')}</small>}
                     </div>
@@ -595,8 +595,8 @@ export default function HomePage() {
               <input
                 className={styles.field}
                 placeholder="Tên của bạn"
-                value={wish.fullName}
-                onChange={(e) => setWish({ ...wish, fullName: e.target.value })}
+                value={wish.guestName}
+                onChange={(e) => setWish({ ...wish, guestName: e.target.value })}
               />
 
               <textarea
