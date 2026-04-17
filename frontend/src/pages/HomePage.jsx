@@ -548,11 +548,8 @@ export default function HomePage() {
 
                 <button type="submit" className={styles.submitBtn}>
                   GỬI LỜI XÁC NHẬN <i className="fa-solid fa-heart" />
-                    
+           
                 </button>
-                 <p className={styles.sectionSubtitle}>
-       Đây là lời chúc riêng tư , muốn gửi lời mời công khai ở phía dưới nhaaaa <3
-    </p>
              
                 {feedback && <div className={styles.feedback}>{feedback}</div>}
               </form>
@@ -567,45 +564,38 @@ export default function HomePage() {
     </p>
 
     <div className={styles.bankGrid}>
-      {bankAccounts.map((bank) => (
-        <div key={bank.id} className={styles.bankCard}>
-          <div className={styles.bankHeader}>
-            <div className={styles.bankIcon}>
-              <i className="fa-solid fa-building-columns" />
-            </div>
-            <div>
-              <h3>{bank.bankName}</h3>
-              <p>{bank.note}</p>
-            </div>
-          </div>
-
-          <div className={styles.bankBody}>
-            <div className={styles.bankQrWrap}>
-              <img
-                src={bank.qrImage}
-                alt={`QR ${bank.bankName}`}
-                className={styles.bankQr}
-              />
-            </div>
-
-            <div className={styles.bankInfo}>
-              <div className={styles.bankLine}>
-                <span>Ngân hàng</span>
-                <strong>{bank.bankName}</strong>
-              </div>
-              <div className={styles.bankLine}>
-                <span>Chủ tài khoản</span>
-                <strong>{bank.accountName}</strong>
-              </div>
-              <div className={styles.bankLine}>
-                <span>Số tài khoản</span>
-                <strong>{bank.accountNumber}</strong>
-              </div>
-            </div>
-          </div>
+  {bankAccounts.map((bank) => (
+    <div key={bank.id} className={styles.bankCard}>
+      <div className={styles.bankTop}>
+        <div className={styles.bankBadge}>
+          <i className="fa-solid fa-gift" />
+          <span>Mừng cưới</span>
         </div>
-      ))}
+        <h3>{bank.bankName}</h3>
+        <p>{bank.note}</p>
+      </div>
+
+      <div className={styles.bankQrCard}>
+        <img
+          src={bank.qrImage}
+          alt={`QR ${bank.bankName}`}
+          className={styles.bankQr}
+        />
+      </div>
+
+      <div className={styles.bankInfo}>
+        <div className={styles.bankLine}>
+          <span>Chủ tài khoản</span>
+          <strong>{bank.accountName}</strong>
+        </div>
+        <div className={styles.bankLine}>
+          <span>Số tài khoản</span>
+          <strong>{bank.accountNumber}</strong>
+        </div>
+      </div>
     </div>
+  ))}
+</div>
   </div>
 </section>
 
