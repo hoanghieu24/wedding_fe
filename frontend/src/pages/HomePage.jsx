@@ -549,6 +549,7 @@ export default function HomePage() {
                 <button type="submit" className={styles.submitBtn}>
                   GỬI LỜI XÁC NHẬN <i className="fa-solid fa-heart" />
                 </button>
+                <b> Đây là lời chúc riêng tư , muốn gửi lời mời công khai ở phía dưới nhaaaa <3</b>
 
                 {feedback && <div className={styles.feedback}>{feedback}</div>}
               </form>
