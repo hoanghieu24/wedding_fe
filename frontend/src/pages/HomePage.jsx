@@ -49,7 +49,7 @@ export default function HomePage() {
   const [rsvp, setRsvp] = useState({
     guestName: '',
     email: '',
-    attendingStatus: 'GOING',
+    attendanceStatus: 'GOING',
     attendanceType: 'DIRECT',
     wishes: ''
   })
@@ -178,11 +178,11 @@ export default function HomePage() {
         NOT_GOING: `💌 Cảm ơn ${rsvp.guestName}, dù không thể tham dự nhưng tình cảm vẫn luôn trọn vẹn.`
       }
 
-      setFeedback(messageMap[rsvp.attendingStatus] || 'Đã gửi xác nhận thành công.')
+      setFeedback(messageMap[rsvp.attendanceStatus] || 'Đã gửi xác nhận thành công.')
       setRsvp({
         guestName: '',
         email: '',
-        attendingStatus: 'GOING',
+        attendanceStatus: 'GOING',
         attendanceType: 'DIRECT',
         wishes: ''
       })
@@ -509,8 +509,8 @@ export default function HomePage() {
 
                 <select
                   className={styles.field}
-                  value={rsvp.attendingStatus}
-                  onChange={(e) => setRsvp({ ...rsvp, attendingStatus: e.target.value })}
+                  value={rsvp.attendanceStatus}
+                  onChange={(e) => setRsvp({ ...rsvp, attendanceStatus: e.target.value })}
                 >
                   <option value="GOING">🥂 Chắc chắn tham dự</option>
                   <option value="MAYBE">✨ Có thể sẽ đến</option>
