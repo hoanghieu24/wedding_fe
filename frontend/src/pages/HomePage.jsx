@@ -22,6 +22,27 @@ const defaultSongs = [
   { name: 'Hơn Cả Yêu', artist: 'Đức Phúc' }
 ]
 
+const bankAccounts = [
+  {
+    id: 1,
+    bankName: 'Vietcombank',
+    accountName: 'NGUYEN VAN A',
+    accountNumber: '1234 567 890',
+    note: 'Mừng cưới cô dâu chú rể',
+    qrImage:
+      'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=VCB-NGUYEN%20VAN%20A-1234567890'
+  },
+  {
+    id: 2,
+    bankName: 'MB Bank',
+    accountName: 'TRAN THI B',
+    accountNumber: '0988 776 655',
+    note: 'Chúc mừng hạnh phúc',
+    qrImage:
+      'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=MBBANK-TRAN%20THI%20B-0988776655'
+  }
+]
+
 function parseWeddingDate(raw) {
   if (!raw) return new Date('2026-05-10T17:30:00+07:00')
   if (raw.includes('/')) {
@@ -534,6 +555,55 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        <section className={`${styles.section} ${styles.sectionSoft}`}>
+  <div className={styles.container}>
+    <h2 className={styles.sectionTitle}>Mừng cưới</h2>
+    <p className={styles.sectionSubtitle}>
+      Nếu bạn muốn gửi quà mừng từ xa, có thể dùng một trong hai tài khoản dưới đây 💖
+    </p>
+
+    <div className={styles.bankGrid}>
+      {bankAccounts.map((bank) => (
+        <div key={bank.id} className={styles.bankCard}>
+          <div className={styles.bankHeader}>
+            <div className={styles.bankIcon}>
+              <i className="fa-solid fa-building-columns" />
+            </div>
+            <div>
+              <h3>{bank.bankName}</h3>
+              <p>{bank.note}</p>
+            </div>
+          </div>
+
+          <div className={styles.bankBody}>
+            <div className={styles.bankQrWrap}>
+              <img
+                src={bank.qrImage}
+                alt={`QR ${bank.bankName}`}
+                className={styles.bankQr}
+              />
+            </div>
+
+            <div className={styles.bankInfo}>
+              <div className={styles.bankLine}>
+                <span>Ngân hàng</span>
+                <strong>{bank.bankName}</strong>
+              </div>
+              <div className={styles.bankLine}>
+                <span>Chủ tài khoản</span>
+                <strong>{bank.accountName}</strong>
+              </div>
+              <div className={styles.bankLine}>
+                <span>Số tài khoản</span>
+                <strong>{bank.accountNumber}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
         {site.showWishes !== false && (
           <section className={`${styles.section} ${styles.sectionSoft}`}>
