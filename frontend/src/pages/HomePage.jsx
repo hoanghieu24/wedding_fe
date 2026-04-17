@@ -486,8 +486,8 @@ export default function HomePage() {
                   className={styles.field}
                   placeholder="Họ và tên *"
                   required
-                  value={rsvp.fullName}
-                  onChange={(e) => setRsvp({ ...rsvp, fullName: e.target.value })}
+                  value={rsvp.guestName}
+                  onChange={(e) => setRsvp({ ...rsvp, guestName: e.target.value })}
                 />
 
                 <input
