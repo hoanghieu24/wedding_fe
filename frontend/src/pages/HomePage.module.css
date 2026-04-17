@@ -94,6 +94,137 @@
   color: var(--deep-red);
 }
 
+.bankGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.bankCard {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fffdfb 0%, #fff4ef 100%);
+  border: 1px solid rgba(188, 71, 66, 0.16);
+  border-radius: 32px;
+  padding: 1.4rem;
+  box-shadow: 0 18px 40px rgba(158, 42, 43, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bankCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(158, 42, 43, 0.14);
+}
+
+.bankCard::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--deep-red), #d96c5f, #f2b8a8);
+}
+
+.bankTop {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.bankBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(158, 42, 43, 0.08);
+  color: var(--deep-red);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+}
+
+.bankTop h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--deep-red);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.bankTop p {
+  margin: 0.35rem 0 0;
+  color: #8a675f;
+  font-size: 0.92rem;
+}
+
+.bankQrCard {
+  background: #fff;
+  border-radius: 24px;
+  padding: 1rem;
+  margin: 1rem auto 1.2rem;
+  max-width: 260px;
+  box-shadow: inset 0 0 0 1px #f2ddd6, 0 10px 24px rgba(0, 0, 0, 0.05);
+}
+
+.bankQr {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  border-radius: 18px;
+}
+
+.bankInfo {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.bankLine {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid #f1ddd6;
+  border-radius: 18px;
+  padding: 0.9rem 1rem;
+  text-align: left;
+}
+
+.bankLine span {
+  display: block;
+  font-size: 0.78rem;
+  color: #9a7b73;
+  margin-bottom: 0.22rem;
+}
+
+.bankLine strong {
+  color: #3f2923;
+  font-size: 1rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .bankGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bankCard {
+    border-radius: 24px;
+    padding: 1rem;
+  }
+
+  .bankTop h3 {
+    font-size: 1.2rem;
+  }
+
+  .bankQrCard {
+    max-width: 220px;
+    padding: 0.8rem;
+  }
+
+  .bankLine {
+    padding: 0.8rem 0.9rem;
+  }
+}
+
 .navMenu li.active::after {
   content: '';
   position: absolute;
