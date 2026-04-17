@@ -81,6 +81,10 @@ export default function HomePage() {
   const [animateElements, setAnimateElements] = useState({})
   const heroRef = useRef(null)
   const observerRef = useRef(null)
+  
+  // Audio state
+  const [audioAllowed, setAudioAllowed] = useState(false)
+  const audioRef = useRef(null)
 
   useEffect(() => {
     document.title = 'Duy Trung ❤️ Thu Trang | Thiệp cưới sang trọng'
@@ -98,6 +102,34 @@ export default function HomePage() {
   useEffect(() => {
     load()
   }, [])
+
+  // Xử lý phát nhạc tự động sau khi người dùng tương tác
+  useEffect(() => {
+    const allowAudio = () => {
+      setAudioAllowed(true)
+      // Sau khi cho phép 1 lần, không cần lắng nghe nữa
+      document.removeEventListener('click', allowAudio)
+      document.removeEventListener('touchstart', allowAudio)
+    }
+    
+    document.addEventListener('click', allowAudio)
+    document.addEventListener('touchstart', allowAudio)
+    
+    return () => {
+      document.removeEventListener('click', allowAudio)
+      document.removeEventListener('touchstart', allowAudio)
+    }
+  }, [])
+
+  // Phát nhạc khi được cho phép
+  useEffect(() => {
+    if (audioAllowed && audioRef.current) {
+      audioRef.current.volume = 0.5 // Đặt âm lượng 50%
+      audioRef.current.play().catch(err => {
+        console.log('Không thể phát nhạc tự động:', err)
+      })
+    }
+  }, [audioAllowed])
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver((entries) => {
@@ -548,7 +580,6 @@ export default function HomePage() {
 
                 <button type="submit" className={styles.submitBtn}>
                   GỬI LỜI XÁC NHẬN <i className="fa-solid fa-heart" />
-           
                 </button>
              
                 {feedback && <div className={styles.feedback}>{feedback}</div>}
@@ -556,55 +587,56 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        
         <section className={`${styles.section} ${styles.sectionSoft}`}>
-  <div className={styles.container}>
-    <h2 className={styles.sectionTitle}>Mừng cưới</h2>
-    <p className={styles.sectionSubtitle}>
-      Nếu bạn muốn gửi quà mừng từ xa, có thể dùng một trong hai tài khoản dưới đây 💖
-    </p>
+          <div className={styles.container}>
+            <h2 className={styles.sectionTitle}>Mừng cưới</h2>
+            <p className={styles.sectionSubtitle}>
+              Nếu bạn muốn gửi quà mừng từ xa, có thể dùng một trong hai tài khoản dưới đây 💖
+            </p>
 
-    <div className={styles.bankGrid}>
-      {bankAccounts.map((bank) => (
-        <div key={bank.id} className={styles.bankCard}>
-          <div className={styles.bankHeader}>
-            <div className={styles.bankIcon}>
-              <i className="fa-solid fa-building-columns" />
-            </div>
-            <div>
-              <h3>{bank.bankName}</h3>
-              <p>{bank.note}</p>
+            <div className={styles.bankGrid}>
+              {bankAccounts.map((bank) => (
+                <div key={bank.id} className={styles.bankCard}>
+                  <div className={styles.bankHeader}>
+                    <div className={styles.bankIcon}>
+                      <i className="fa-solid fa-building-columns" />
+                    </div>
+                    <div>
+                      <h3>{bank.bankName}</h3>
+                      <p>{bank.note}</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.bankBody}>
+                    <div className={styles.bankQrWrap}>
+                      <img
+                        src={bank.qrImage}
+                        alt={`QR ${bank.bankName}`}
+                        className={styles.bankQr}
+                      />
+                    </div>
+
+                    <div className={styles.bankInfo}>
+                      <div className={styles.bankLine}>
+                        <span>Ngân hàng</span>
+                        <strong>{bank.bankName}</strong>
+                      </div>
+                      <div className={styles.bankLine}>
+                        <span>Chủ tài khoản</span>
+                        <strong>{bank.accountName}</strong>
+                      </div>
+                      <div className={styles.bankLine}>
+                        <span>Số tài khoản</span>
+                        <strong>{bank.accountNumber}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-
-          <div className={styles.bankBody}>
-            <div className={styles.bankQrWrap}>
-              <img
-                src={bank.qrImage}
-                alt={`QR ${bank.bankName}`}
-                className={styles.bankQr}
-              />
-            </div>
-
-            <div className={styles.bankInfo}>
-              <div className={styles.bankLine}>
-                <span>Ngân hàng</span>
-                <strong>{bank.bankName}</strong>
-              </div>
-              <div className={styles.bankLine}>
-                <span>Chủ tài khoản</span>
-                <strong>{bank.accountName}</strong>
-              </div>
-              <div className={styles.bankLine}>
-                <span>Số tài khoản</span>
-                <strong>{bank.accountNumber}</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+        </section>
 
         {site.showWishes !== false && (
           <section className={`${styles.section} ${styles.sectionSoft}`}>
@@ -619,7 +651,7 @@ export default function HomePage() {
                       <i className="fa-solid fa-comment-dots" />
                     </div>
                     <div className={styles.wishContent}>
-                      <strong>{item.guestName || item.guestName || 'Khách mời'}</strong>
+                      <strong>{item.guestName || item.fullName || 'Khách mời'}</strong>
                       <p>{item.message}</p>
                       {item.createdAt && <small>{new Date(item.createdAt).toLocaleDateString('vi-VN')}</small>}
                     </div>
@@ -650,8 +682,15 @@ export default function HomePage() {
         </div>
       </footer>
 
+      {/* Audio player - tự động phát sau khi người dùng click chuột */}
       {site.showMusic !== false && site.backgroundMusicUrl && (
-        <audio className={styles.floatingAudio} src={site.backgroundMusicUrl} autoPlay controls loop />
+        <audio 
+          ref={audioRef}
+          className={styles.floatingAudio} 
+          src={site.backgroundMusicUrl} 
+          loop
+          controls
+        />
       )}
 
       {wishModalOpen && (
