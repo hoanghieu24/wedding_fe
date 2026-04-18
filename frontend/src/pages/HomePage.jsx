@@ -25,12 +25,12 @@ const defaultSongs = [
 const bankAccounts = [
   {
     id: 1,
-    bankName: 'Vietcombank',
-    accountName: 'NGUYEN VAN A',
-    accountNumber: '1234 567 890',
+    bankName: 'Viettinbank(CTG)',
+    accountName: 'Hoang Thi Thu Trang',
+    accountNumber: '106869089934',
     note: 'Mừng cưới cô dâu chú rể',
     qrImage:
-      'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=VCB-NGUYEN%20VAN%20A-1234567890'
+      'https://qr.sepay.vn/img?bank=VietinBank&acc=106869089934&template=qronly&amount=&des='
   },
   {
     id: 2,
