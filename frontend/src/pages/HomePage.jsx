@@ -373,23 +373,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className={`${styles.section} ${styles.sectionSoft}`}>
-          <div className={styles.container}>
-            <h2 className={styles.sectionTitle} data-animate id="milestones">Dấu ấn đỏ son</h2>
-            <div className={styles.sectionDivider} data-animate id="milestones">
-              <i className="fa-solid fa-ring" />
-            </div>
-            <div className={styles.milestoneGrid}>
-              {(site.milestones?.length ? site.milestones : defaultMilestones).map((item, idx) => (
-                <div className={`${styles.milestoneCard} ${animateElements.milestones ? styles.scaleIn : ''}`} data-animate id="milestones" key={idx} style={{ animationDelay: `${idx * 0.1}s` }}>
-                  <div className={styles.milestoneYear}>{item.year}</div>
-                  <div className={styles.milestoneIcon}><i className={item.icon} /></div>
-                  <p>{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        
 
         <section className={styles.section}>
           <div className={styles.container}>
