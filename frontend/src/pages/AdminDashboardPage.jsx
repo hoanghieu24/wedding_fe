@@ -644,10 +644,10 @@ export default function AdminDashboardPage() {
                             borderRadius: 20,
                             fontSize: 11,
                             fontWeight: 700,
-                            background: item.attendingStatus === 'GOING' ? '#dcfce7' : item.attendingStatus === 'MAYBE' ? '#fef3c7' : '#fee2e2',
-                            color: item.attendingStatus === 'GOING' ? '#166534' : item.attendingStatus === 'MAYBE' ? '#92400e' : '#991b1b'
+                            background: item.attendanceStatus === 'GOING' ? '#dcfce7' : item.attendanceStatus === 'MAYBE' ? '#fef3c7' : '#fee2e2',
+                            color: item.attendanceStatus === 'GOING' ? '#166534' : item.attendanceStatus === 'MAYBE' ? '#92400e' : '#991b1b'
                           }}>
-                            {item.attendingStatus === 'GOING' ? '✅ Sẽ đến' : item.attendingStatus === 'MAYBE' ? '❓ Cân nhắc' : '❌ Không đến'}
+                            {item.attendanceStatus === 'GOING' ? '✅ Sẽ đến' : item.attendanceStatus === 'MAYBE' ? '❓ Cân nhắc' : '❌ Không đến'}
                           </span>
                         </td>
                         <td style={tdStyle}>{item.wishes || '-'}</td>
