@@ -1,4 +1,3 @@
-/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 /* CSS Variables */
@@ -644,7 +643,7 @@
   transform: translateY(-2px);
 }
 
-/* Gallery */
+/* Gallery - Mobile optimized */
 .galleryGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -843,12 +842,16 @@ textarea.field {
 .feedback {
   text-align: center;
   margin-top: 1rem;
+  padding: 0.75rem;
+  background: #e9f5ef;
   color: #2d6a4f;
+  border-radius: 60px;
   font-size: 0.9rem;
   animation: fadeInUp 0.3s ease;
+  border: 1px solid #c8e6d9;
 }
 
-/* Guest Messages */
+/* Guest Messages - Mobile optimized */
 .guestMessages {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -930,7 +933,7 @@ textarea.field {
   transform: translateY(-3px);
 }
 
-/* Modal */
+/* Modal - Mobile optimized */
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -1116,7 +1119,7 @@ textarea.field {
   animation: bounceIn 0.8s ease forwards;
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile Optimizations */
 @media (max-width: 768px) {
   .section {
     padding: 3rem 0;
@@ -1175,17 +1178,57 @@ textarea.field {
     font-size: 0.9rem;
   }
   
+  /* Gallery - 2 columns on mobile */
   .galleryGrid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
   
+  .galleryItem {
+    border-radius: 16px;
+  }
+  
+  /* Guest messages - 2 columns on mobile */
   .guestMessages {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .wishCard {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  
+  .wishAvatar i {
+    font-size: 1.4rem;
+  }
+  
+  .wishContent strong {
+    font-size: 0.85rem;
+  }
+  
+  .wishContent p {
+    font-size: 0.8rem;
   }
   
   .venuesGrid {
     grid-template-columns: 1fr;
+  }
+  
+  /* Modal actions on mobile */
+  .modalActions {
+    flex-direction: column;
+  }
+  
+  .modalActions .btnOutline {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Feedback message on mobile */
+  .feedback {
+    font-size: 0.8rem;
+    padding: 0.6rem;
   }
 }
 
@@ -1223,5 +1266,25 @@ textarea.field {
   
   .milestoneCard {
     min-width: 100%;
+  }
+  
+  /* Gallery - maintain 2 columns but smaller gap */
+  .galleryGrid {
+    gap: 0.5rem;
+  }
+  
+  /* Guest messages - maintain 2 columns */
+  .guestMessages {
+    gap: 0.5rem;
+  }
+  
+  /* Modal full width on very small screens */
+  .modalContainer {
+    padding: 1.25rem;
+    margin: 0 0.5rem;
+  }
+  
+  .modalHeader h3 {
+    font-size: 1.5rem;
   }
 }
