@@ -64,7 +64,7 @@ function formatHeroDate(rawDate, location) {
 }
 
 export default function HomePage() {
-  const [data, setData] = useState({ site: {}, gallery: [], wishes: [] })
+  const [data, setData] = useState({ site: {}, gallery: [], note: [] })
   const [wishModalOpen, setWishModalOpen] = useState(false)
   const [wish, setWish] = useState({ fullName: '', message: '' })
   const [rsvp, setRsvp] = useState({
@@ -72,7 +72,7 @@ export default function HomePage() {
     phone: '',
     attendanceStatus: 'GOING',
     attendanceType: 'DIRECT',
-    wishes: ''
+    note: ''
   })
   const [feedback, setFeedback] = useState('')
   const [countdown, setCountdown] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' })
