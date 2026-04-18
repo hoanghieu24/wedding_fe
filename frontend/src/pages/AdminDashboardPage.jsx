@@ -176,8 +176,8 @@ export default function AdminDashboardPage() {
   }
 
   const stats = useMemo(() => {
-    const totalGoing = (data.rsvps || []).filter(item => item.attendingStatus === 'GOING').length
-    const totalMaybe = (data.rsvps || []).filter(item => item.attendingStatus === 'MAYBE').length
+    const totalGoing = (data.rsvps || []).filter(item => item.attendanceStatus === 'GOING').length
+    const totalMaybe = (data.rsvps || []).filter(item => item.attendanceStatus === 'MAYBE').length
     const totalVisibleWish = (data.wishes || []).filter(item => item.visible).length
     return {
       totalGoing,
