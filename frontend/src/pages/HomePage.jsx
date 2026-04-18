@@ -69,7 +69,7 @@ export default function HomePage() {
   const [wish, setWish] = useState({ fullName: '', message: '' })
   const [rsvp, setRsvp] = useState({
     guestName: '',
-    email: '',
+    phone: '',
     attendanceStatus: 'GOING',
     attendanceType: 'DIRECT',
     wishes: ''
@@ -234,7 +234,7 @@ export default function HomePage() {
       setFeedback(messageMap[rsvp.attendanceStatus] || 'Đã gửi xác nhận thành công.')
       setRsvp({
         guestName: '',
-        email: '',
+        phone: '',
         attendanceStatus: 'GOING',
         attendanceType: 'DIRECT',
         wishes: ''
@@ -528,11 +528,11 @@ export default function HomePage() {
                 />
 
                 <input
-                  type="email"
+                  type="phone"
                   className={styles.field}
-                  placeholder="Email"
-                  value={rsvp.email}
-                  onChange={(e) => setRsvp({ ...rsvp, email: e.target.value })}
+                  placeholder="phone"
+                  value={rsvp.phone}
+                  onChange={(e) => setRsvp({ ...rsvp, phone: e.target.value })}
                 />
 
                 <select
