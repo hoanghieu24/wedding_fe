@@ -184,31 +184,36 @@ export default function HomePage() {
     return site.heroTitle || 'Duy Trung & Thu Trang'
   }, [site])
 
-  useEffect(() => {
-    const target = parseWeddingDate(site.weddingDate)
+useEffect(() => {
+  // Tạo ngày cố định 10/5/2026, 17:30 theo giờ địa phương
+  const targetDate = new Date(2026, 4, 10, 17, 30, 0) // 4 = tháng 5 (0-indexed)
 
-    const tick = () => {
-      const now = new Date()
-      const diff = target - now
+  const tick = () => {
+    const now = new Date()
+    const diff = targetDate - now
 
-      if (diff <= 0) {
-        setCountdown({ days: '00', hours: '00', minutes: '00', seconds: '00' })
-        return
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-
-      setCountdown({
-        days: String(days).padStart(2, '0'),
-        hours: String(hours).padStart(2, '0'),
-        minutes: String(minutes).padStart(2, '0'),
-        seconds: String(seconds).padStart(2, '0')
-      })
+    if (diff <= 0) {
+      setCountdown({ days: '00', hours: '00', minutes: '00', seconds: '00' })
+      return
     }
 
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+    setCountdown({
+      days: String(days).padStart(2, '0'),
+      hours: String(hours).padStart(2, '0'),
+      minutes: String(minutes).padStart(2, '0'),
+      seconds: String(seconds).padStart(2, '0')
+    })
+  }
+
+  tick()
+  const timer = setInterval(tick, 1000)
+  return () => clearInterval(timer)
+}, []) // Bỏ dependency để không bị reset
     tick()
     const timer = setInterval(tick, 1000)
     return () => clearInterval(timer)
