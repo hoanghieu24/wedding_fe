@@ -66,7 +66,7 @@ function formatHeroDate(rawDate, location) {
 export default function HomePage() {
   const [data, setData] = useState({ site: {}, gallery: [], note: [] })
   const [wishModalOpen, setWishModalOpen] = useState(false)
-  const [wish, setWish] = useState({ fullName: '', message: '' })
+  const [wish, setWish] = useState({ guestName: '', message: '' })
   const [rsvp, setRsvp] = useState({
     guestName: '',
     phone: '',
@@ -107,7 +107,6 @@ export default function HomePage() {
   useEffect(() => {
     const allowAudio = () => {
       setAudioAllowed(true)
-      // Sau khi cho phép 1 lần, không cần lắng nghe nữa
       document.removeEventListener('click', allowAudio)
       document.removeEventListener('touchstart', allowAudio)
     }
@@ -124,7 +123,7 @@ export default function HomePage() {
   // Phát nhạc khi được cho phép
   useEffect(() => {
     if (audioAllowed && audioRef.current) {
-      audioRef.current.volume = 0.5 // Đặt âm lượng 50%
+      audioRef.current.volume = 0.5
       audioRef.current.play().catch(err => {
         console.log('Không thể phát nhạc tự động:', err)
       })
@@ -184,40 +183,37 @@ export default function HomePage() {
     return site.heroTitle || 'Duy Trung & Thu Trang'
   }, [site])
 
-useEffect(() => {
-  // Tạo ngày cố định 10/5/2026, 17:30 theo giờ địa phương
-  const targetDate = new Date(2026, 4, 10, 17, 30, 0) // 4 = tháng 5 (0-indexed)
+  // Countdown - đếm ngược đến ngày 10/5/2026
+  useEffect(() => {
+    // Tạo ngày cố định 10/5/2026, 17:30 theo giờ địa phương
+    const targetDate = new Date(2026, 4, 10, 17, 30, 0) // 4 = tháng 5 (0-indexed)
 
-  const tick = () => {
-    const now = new Date()
-    const diff = targetDate - now
+    const tick = () => {
+      const now = new Date()
+      const diff = targetDate - now
 
-    if (diff <= 0) {
-      setCountdown({ days: '00', hours: '00', minutes: '00', seconds: '00' })
-      return
+      if (diff <= 0) {
+        setCountdown({ days: '00', hours: '00', minutes: '00', seconds: '00' })
+        return
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+      setCountdown({
+        days: String(days).padStart(2, '0'),
+        hours: String(hours).padStart(2, '0'),
+        minutes: String(minutes).padStart(2, '0'),
+        seconds: String(seconds).padStart(2, '0')
+      })
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-
-    setCountdown({
-      days: String(days).padStart(2, '0'),
-      hours: String(hours).padStart(2, '0'),
-      minutes: String(minutes).padStart(2, '0'),
-      seconds: String(seconds).padStart(2, '0')
-    })
-  }
-
-  tick()
-  const timer = setInterval(tick, 1000)
-  return () => clearInterval(timer)
-}, []) // Bỏ dependency để không bị reset
     tick()
     const timer = setInterval(tick, 1000)
     return () => clearInterval(timer)
-  }, [site.weddingDate])
+  }, []) // Không phụ thuộc vào site.weddingDate
 
   const submitRsvp = async (e) => {
     e.preventDefault()
@@ -378,8 +374,6 @@ useEffect(() => {
           </div>
         </section>
 
-        
-
         <section className={styles.section}>
           <div className={styles.container}>
             <div className={styles.countdownWrap}>
@@ -533,9 +527,9 @@ useEffect(() => {
                 />
 
                 <input
-                  type="phone"
+                  type="tel"
                   className={styles.field}
-                  placeholder="phone"
+                  placeholder="Số điện thoại"
                   value={rsvp.phone}
                   onChange={(e) => setRsvp({ ...rsvp, phone: e.target.value })}
                 />
