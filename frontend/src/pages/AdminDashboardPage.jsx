@@ -650,7 +650,7 @@ export default function AdminDashboardPage() {
                             {item.attendanceStatus === 'GOING' ? '✅ Sẽ đến' : item.attendanceStatus === 'MAYBE' ? '❓ Cân nhắc' : '❌ Không đến'}
                           </span>
                         </td>
-                        <td style={tdStyle}>{item.wishes || '-'}</td>
+                        <td style={tdStyle}>{item.note || '-'}</td>
                       </tr>
                     ))
                   )}
