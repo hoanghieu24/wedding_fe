@@ -237,7 +237,7 @@ export default function HomePage() {
         phone: '',
         attendanceStatus: 'GOING',
         attendanceType: 'DIRECT',
-        wishes: ''
+        note: ''
       })
       setTimeout(() => setFeedback(''), 4000)
     } catch (error) {
@@ -558,8 +558,8 @@ export default function HomePage() {
                   className={styles.field}
                   placeholder="Lời chúc tốt đẹp dành cho cô dâu chú rể..."
                   rows="3"
-                  value={rsvp.wishes}
-                  onChange={(e) => setRsvp({ ...rsvp, wishes: e.target.value })}
+                  value={rsvp.note}
+                  onChange={(e) => setRsvp({ ...rsvp, note: e.target.value })}
                 />
 
                 <button type="submit" className={styles.submitBtn}>
