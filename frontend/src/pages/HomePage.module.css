@@ -230,8 +230,9 @@
   border-radius: 16px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--deep-red), var(--brick-red));
-  color: #fff;
+  /* Bỏ gradient và màu chữ */
+  background: url('https://file.hstatic.net/1000192210/file/ngan-hang-vcb-la-gi__2__3be60ffe23514c97bb6bbb45c9abe05f.jpg') center/cover no-repeat;
+  color: transparent; /* Ẩn chữ nếu có */
   font-size: 1.2rem;
   flex-shrink: 0;
 }
