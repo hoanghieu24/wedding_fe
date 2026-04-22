@@ -352,6 +352,7 @@ export default function HomePage() {
     <i className="fa-solid fa-heart" />
     <span>Save the date</span>
   </div>
+  <br/>
 
   <div className={styles.coupleLabel}>
     <span className={styles.brideText}>Chú rể</span>
