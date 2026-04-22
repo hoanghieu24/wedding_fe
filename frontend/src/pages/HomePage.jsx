@@ -390,7 +390,7 @@ export default function HomePage() {
               <i className="fa-solid fa-user-tie"></i>
             </div>
             <div className={styles.figureLabel}>Chú rể</div>
-          </div          </div>
+              
           <div className={styles.brideFigure}>
             <div className={styles.figureShadow}></div>
             <div className={styles.figureBody}>
