@@ -63,6 +63,15 @@ function formatHeroDate(rawDate, location) {
   return `⸻ ${parts.join(' · ')} — ${location || 'Nghệ An'} ⸻`
 }
 
+const petals = Array.from({ length: 18 }, (_, i) => ({
+  id: i + 1,
+  left: `${Math.random() * 100}%`,
+  delay: `${Math.random() * 8}s`,
+  duration: `${8 + Math.random() * 8}s`,
+  scale: 0.6 + Math.random() * 0.8,
+  rotate: `${Math.random() * 360}deg`
+}))
+
 export default function HomePage() {
   const [data, setData] = useState({ site: {}, gallery: [], note: [] })
   const [wishModalOpen, setWishModalOpen] = useState(false)
@@ -79,42 +88,12 @@ export default function HomePage() {
   const [activeNav, setActiveNav] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [animateElements, setAnimateElements] = useState({})
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [floatingHearts, setFloatingHearts] = useState([])
   const heroRef = useRef(null)
   const observerRef = useRef(null)
   
   // Audio state
   const [audioAllowed, setAudioAllowed] = useState(false)
   const audioRef = useRef(null)
-
-  // Tạo hiệu ứng trái tim bay
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newHeart = {
-        id: Date.now() + Math.random(),
-        left: Math.random() * 100,
-        size: 15 + Math.random() * 25,
-        duration: 3 + Math.random() * 4,
-        delay: Math.random() * 2
-      }
-      setFloatingHearts(prev => [...prev.slice(-15), newHeart])
-      
-      setTimeout(() => {
-        setFloatingHearts(prev => prev.filter(heart => heart.id !== newHeart.id))
-      }, newHeart.duration * 1000)
-    }, 800)
-    
-    return () => clearInterval(interval)
-  }, [])
-
-  // Hiệu ứng confetti khi load trang
-  useEffect(() => {
-    setTimeout(() => {
-      setShowConfetti(true)
-      setTimeout(() => setShowConfetti(false), 5000)
-    }, 1000)
-  }, [])
 
   useEffect(() => {
     document.title = 'Duy Trung ❤️ Thu Trang | Thiệp cưới sang trọng'
@@ -215,7 +194,8 @@ export default function HomePage() {
 
   // Countdown - đếm ngược đến ngày 10/5/2026
   useEffect(() => {
-    const targetDate = new Date(2026, 4, 10, 17, 30, 0)
+    // Tạo ngày cố định 10/5/2026, 17:30 theo giờ địa phương
+    const targetDate = new Date(2026, 4, 10, 17, 30, 0) // 4 = tháng 5 (0-indexed)
 
     const tick = () => {
       const now = new Date()
@@ -242,7 +222,7 @@ export default function HomePage() {
     tick()
     const timer = setInterval(tick, 1000)
     return () => clearInterval(timer)
-  }, [])
+  }, []) // Không phụ thuộc vào site.weddingDate
 
   const submitRsvp = async (e) => {
     e.preventDefault()
@@ -327,38 +307,6 @@ export default function HomePage() {
 
   return (
     <div className={styles.app}>
-      {/* Hiệu ứng confetti */}
-      {showConfetti && <div className={styles.confettiContainer}>
-        {[...Array(100)].map((_, i) => (
-          <div key={i} className={styles.confetti} style={{
-            left: Math.random() * 100 + '%',
-            animationDelay: Math.random() * 3 + 's',
-            backgroundColor: `hsl(${Math.random() * 360}, 100%, 60%)`,
-            width: (Math.random() * 8 + 4) + 'px',
-            height: (Math.random() * 12 + 6) + 'px'
-          }} />
-        ))}
-      </div>}
-
-      {/* Hiệu ứng trái tim bay */}
-      <div className={styles.floatingHeartsContainer}>
-        {floatingHearts.map(heart => (
-          <div
-            key={heart.id}
-            className={styles.floatingHeart}
-            style={{
-              left: heart.left + '%',
-              width: heart.size + 'px',
-              height: heart.size + 'px',
-              animationDuration: heart.duration + 's',
-              animationDelay: heart.delay + 's'
-            }}
-          >
-            ❤️
-          </div>
-        ))}
-      </div>
-
       <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
         <div className={styles.navContainer}>
           <div className={styles.navLogo} onClick={() => scrollToSection('hero')}>
@@ -381,53 +329,59 @@ export default function HomePage() {
 
       <header className={styles.hero} id="hero" ref={heroRef}>
         <div className={styles.heroOverlay} />
-        
-        {/* Cô dâu và chú rể trang trí */}
-        <div className={styles.coupleDecor}>
-          <div className={styles.groomFigure}>
-            <div className={styles.figureShadow}></div>
-            <div className={styles.figureBody}>
-              <i className="fa-solid fa-user-tie"></i>
-            </div>
-            <div className={styles.figureLabel}>Chú rể</div>
-          </div>
-          <div className={styles.brideFigure}>
-            <div className={styles.figureShadow}></div>
-            <div className={styles.figureBody}>
-              <i className="fa-solid fa-venus"></i>
-            </div>
-            <div className={styles.figureLabel}>Cô dâu</div>
-          </div>
-          <div className={styles.ringIcon}>
-            <i className="fa-solid fa-ring"></i>
-          </div>
-        </div>
+        <div className={styles.sparkleLayer}>
+  {petals.map((petal) => (
+    <span
+      key={petal.id}
+      className={styles.petal}
+      style={{
+        left: petal.left,
+        animationDelay: petal.delay,
+        animationDuration: petal.duration,
+        transform: `scale(${petal.scale}) rotate(${petal.rotate})`
+      }}
+    />
+  ))}
+</div>
 
-        <div className={styles.heroContent}>
-          <div className={`${styles.heroBadge} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            <i className="fa-solid fa-heart" />
-            <span>Save the date</span>
-          </div>
-          <h1 className={`${styles.heroTitle} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            {coupleNames}
-          </h1>
-          <p className={`${styles.heroDesc} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            {site.welcomeMessage || 'Một lời hẹn giữa yêu thương, để cùng nhau chứng kiến khoảnh khắc đẹp nhất của chúng tôi trong sắc đỏ nồng nàn và hạnh phúc.'}
-          </p>
-          <div className={`${styles.heroDate} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            {formatHeroDate(site.weddingDate, site.weddingLocation)}
-          </div>
-          <div className={styles.heroActions}>
-            <button onClick={() => scrollToSection('rsvp')} className={styles.btnPrimary}>
-              <i className="fa-solid fa-envelope-open-text" />
-              Xác nhận tham dự
-            </button>
-            <button onClick={() => scrollToSection('venues')} className={styles.btnOutline}>
-              <i className="fa-solid fa-location-dot" />
-              Xem địa điểm
-            </button>
-          </div>
-        </div>
+<div className={styles.coupleSilhouette}>
+  <div className={styles.brideGroomIcon}>💍</div>
+</div>
+       <div className={styles.heroContent}>
+  <div className={`${styles.heroBadge} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    <i className="fa-solid fa-heart" />
+    <span>Save the date</span>
+  </div>
+
+  <div className={styles.coupleLabel}>
+    <span className={styles.brideText}>Cô dâu</span>
+    <span className={styles.heartDivider}>❤</span>
+    <span className={styles.groomText}>Chú rể</span>
+  </div>
+
+  <h1 className={`${styles.heroTitle} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    {coupleNames}
+  </h1>
+
+  <p className={`${styles.heroDesc} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    {site.welcomeMessage || 'Một lời hẹn giữa yêu thương, để cùng nhau chứng kiến khoảnh khắc đẹp nhất của chúng tôi trong sắc đỏ nồng nàn và hạnh phúc.'}
+  </p>
+
+  <div className={`${styles.heroDate} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    {formatHeroDate(site.weddingDate, site.weddingLocation)}
+  </div>
+
+  <div className={styles.heroActions}>
+    <button onClick={() => scrollToSection('rsvp')} className={styles.btnPrimary}>
+      <i className="fa-solid fa-envelope-open-text" />
+      Xác nhận tham dự
+    </button>
+    <button onClick={() => scrollToSection('venues')} className={styles.btnOutline}>
+      <i className="fa-solid fa-location-dot" />
+      Xem địa điểm
+    </button>
+  </div>
+</div>
         <button onClick={() => scrollToSection('loveStory')} className={styles.scrollDown}>
           <i className="fa-solid fa-chevron-down" />
           <span>Cuộn xuống</span>
@@ -452,9 +406,6 @@ export default function HomePage() {
               </div>
               <div className={`${styles.storyMedia} ${animateElements.loveStory ? styles.fadeInUp : ''}`} data-animate id="loveStory" style={{ animationDelay: '0.2s' }}>
                 <img src={site.heroImageUrl || 'https://picsum.photos/id/104/900/1100'} alt={coupleNames} />
-                <div className={styles.imageOverlayEffect}>
-                  <i className="fa-solid fa-heart"></i>
-                </div>
               </div>
             </div>
           </div>
