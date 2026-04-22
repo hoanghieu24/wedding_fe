@@ -354,9 +354,9 @@ export default function HomePage() {
   </div>
 
   <div className={styles.coupleLabel}>
-    <span className={styles.brideText}>Cô dâu</span>
+    <span className={styles.brideText}>Chú rể</span>
     <span className={styles.heartDivider}>❤</span>
-    <span className={styles.groomText}>Chú rể</span>
+    <span className={styles.groomText}>Cô dâu</span>
   </div>
 
   <h1 className={`${styles.heroTitle} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
