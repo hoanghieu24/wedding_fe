@@ -63,6 +63,15 @@ function formatHeroDate(rawDate, location) {
   return `⸻ ${parts.join(' · ')} — ${location || 'Nghệ An'} ⸻`
 }
 
+const petals = Array.from({ length: 18 }, (_, i) => ({
+  id: i + 1,
+  left: `${Math.random() * 100}%`,
+  delay: `${Math.random() * 8}s`,
+  duration: `${8 + Math.random() * 8}s`,
+  scale: 0.6 + Math.random() * 0.8,
+  rotate: `${Math.random() * 360}deg`
+}))
+
 export default function HomePage() {
   const [data, setData] = useState({ site: {}, gallery: [], note: [] })
   const [wishModalOpen, setWishModalOpen] = useState(false)
@@ -320,31 +329,59 @@ export default function HomePage() {
 
       <header className={styles.hero} id="hero" ref={heroRef}>
         <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <div className={`${styles.heroBadge} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            <i className="fa-solid fa-heart" />
-            <span>Save the date</span>
-          </div>
-          <h1 className={`${styles.heroTitle} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            {coupleNames}
-          </h1>
-          <p className={`${styles.heroDesc} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            {site.welcomeMessage || 'Một lời hẹn giữa yêu thương, để cùng nhau chứng kiến khoảnh khắc đẹp nhất của chúng tôi trong sắc đỏ nồng nàn và hạnh phúc.'}
-          </p>
-          <div className={`${styles.heroDate} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
-            {formatHeroDate(site.weddingDate, site.weddingLocation)}
-          </div>
-          <div className={styles.heroActions}>
-            <button onClick={() => scrollToSection('rsvp')} className={styles.btnPrimary}>
-              <i className="fa-solid fa-envelope-open-text" />
-              Xác nhận tham dự
-            </button>
-            <button onClick={() => scrollToSection('venues')} className={styles.btnOutline}>
-              <i className="fa-solid fa-location-dot" />
-              Xem địa điểm
-            </button>
-          </div>
-        </div>
+        <div className={styles.sparkleLayer}>
+  {petals.map((petal) => (
+    <span
+      key={petal.id}
+      className={styles.petal}
+      style={{
+        left: petal.left,
+        animationDelay: petal.delay,
+        animationDuration: petal.duration,
+        transform: `scale(${petal.scale}) rotate(${petal.rotate})`
+      }}
+    />
+  ))}
+</div>
+
+<div className={styles.coupleSilhouette}>
+  <div className={styles.brideGroomIcon}>💍</div>
+</div>
+       <div className={styles.heroContent}>
+  <div className={`${styles.heroBadge} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    <i className="fa-solid fa-heart" />
+    <span>Save the date</span>
+  </div>
+
+  <div className={styles.coupleLabel}>
+    <span className={styles.brideText}>Cô dâu</span>
+    <span className={styles.heartDivider}>❤</span>
+    <span className={styles.groomText}>Chú rể</span>
+  </div>
+
+  <h1 className={`${styles.heroTitle} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    {coupleNames}
+  </h1>
+
+  <p className={`${styles.heroDesc} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    {site.welcomeMessage || 'Một lời hẹn giữa yêu thương, để cùng nhau chứng kiến khoảnh khắc đẹp nhất của chúng tôi trong sắc đỏ nồng nàn và hạnh phúc.'}
+  </p>
+
+  <div className={`${styles.heroDate} ${animateElements.hero ? styles.animated : ''}`} data-animate id="hero">
+    {formatHeroDate(site.weddingDate, site.weddingLocation)}
+  </div>
+
+  <div className={styles.heroActions}>
+    <button onClick={() => scrollToSection('rsvp')} className={styles.btnPrimary}>
+      <i className="fa-solid fa-envelope-open-text" />
+      Xác nhận tham dự
+    </button>
+    <button onClick={() => scrollToSection('venues')} className={styles.btnOutline}>
+      <i className="fa-solid fa-location-dot" />
+      Xem địa điểm
+    </button>
+  </div>
+</div>
         <button onClick={() => scrollToSection('loveStory')} className={styles.scrollDown}>
           <i className="fa-solid fa-chevron-down" />
           <span>Cuộn xuống</span>
