@@ -1118,3 +1118,414 @@
     flex-direction: column;
   }
 }
+/* =========================
+   MOBILE POLISH FINAL
+   Dán cuối HomePage.module.css
+   ========================= */
+
+@media (max-width: 768px) {
+  body {
+    background: #fff7f1;
+  }
+
+  .app {
+    background:
+      radial-gradient(circle at 20% 0%, rgba(255, 214, 220, 0.55), transparent 32%),
+      linear-gradient(180deg, #fff7f1 0%, #fff1ea 48%, #fff8f3 100%);
+  }
+
+  /* Navbar mobile đẹp hơn */
+  .navbar {
+    top: 12px !important;
+    padding: 0 12px !important;
+  }
+
+  .navContainer {
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 7px 10px !important;
+    border-radius: 999px !important;
+    background: rgba(106, 24, 31, 0.88) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 18px 45px rgba(75, 7, 16, 0.25) !important;
+    backdrop-filter: blur(18px) !important;
+  }
+
+  .navLogo {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: white !important;
+  }
+
+  .navLogo span {
+    display: none !important;
+  }
+
+  .navLogo i {
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #ffe4e8 !important;
+    font-size: 18px !important;
+  }
+
+  .navMenu {
+    display: flex !important;
+    flex: 1 !important;
+    justify-content: space-between !important;
+    gap: 3px !important;
+    margin-left: 8px !important;
+  }
+
+  .navMenu li {
+    flex: 1 !important;
+    padding: 10px 4px !important;
+    border-radius: 999px !important;
+    color: rgba(255, 255, 255, 0.86) !important;
+    font-size: 12.5px !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  .navMenu li.active,
+  .navMenu li:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    color: #fff !important;
+  }
+
+  .navMenu li::after {
+    display: none !important;
+  }
+
+  /* Hero mobile: gọn, sang, không bị nặng */
+  .hero {
+    min-height: 100svh !important;
+    padding: 88px 12px 76px !important;
+    place-items: center !important;
+    background-position: center !important;
+  }
+
+  .heroOverlay {
+    background:
+      linear-gradient(180deg, rgba(58, 6, 15, 0.2) 0%, rgba(66, 6, 17, 0.44) 36%, rgba(49, 4, 13, 0.9) 100%) !important;
+  }
+
+  .heroContent {
+    width: 100% !important;
+    padding: 28px 18px 24px !important;
+    border-radius: 30px !important;
+    background: rgba(86, 12, 22, 0.42) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+      0 24px 70px rgba(0, 0, 0, 0.26) !important;
+    backdrop-filter: blur(14px) saturate(1.1) !important;
+  }
+
+  .heroBadge {
+    padding: 9px 16px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    font-size: 10.5px !important;
+    letter-spacing: 0.22em !important;
+  }
+
+  .coupleLabel {
+    margin-top: 26px !important;
+    color: rgba(255, 255, 255, 0.78) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.28em !important;
+  }
+
+  .heroTitle {
+    margin-top: 10px !important;
+    font-size: clamp(60px, 18vw, 86px) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-shadow: 0 16px 38px rgba(0, 0, 0, 0.28) !important;
+  }
+
+  .heroDesc {
+    max-width: 92% !important;
+    margin: 24px auto 0 !important;
+    color: rgba(255, 255, 255, 0.84) !important;
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+  }
+
+  .heroDate {
+    width: auto !important;
+    max-width: 100% !important;
+    margin-top: 26px !important;
+    padding: 13px 18px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.13) !important;
+    border: 1px solid rgba(255, 255, 255, 0.34) !important;
+    color: #fff2df !important;
+    font-size: 15px !important;
+    letter-spacing: 0.14em !important;
+  }
+
+  .heroActions {
+    margin-top: 26px !important;
+    gap: 12px !important;
+  }
+
+  .btnPrimary,
+  .btnOutline {
+    min-height: 56px !important;
+    border-radius: 999px !important;
+    font-size: 15px !important;
+  }
+
+  .btnPrimary {
+    background: linear-gradient(135deg, #c81920, #ee4b3f) !important;
+    box-shadow: 0 18px 38px rgba(210, 34, 38, 0.32) !important;
+  }
+
+  .btnOutline {
+    border: 1px solid rgba(255, 255, 255, 0.34) !important;
+    background: rgba(255, 255, 255, 0.11) !important;
+    color: #fff !important;
+  }
+
+  .scrollDown {
+    display: none !important;
+  }
+
+  /* Nút nhạc bớt thô */
+  .musicFloatingBtn {
+    right: 16px !important;
+    bottom: 18px !important;
+    width: 58px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: rgba(196, 26, 36, 0.92) !important;
+    border: 6px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 14px 36px rgba(128, 10, 20, 0.35) !important;
+  }
+
+  .musicFloatingBtn .musicText,
+  .musicText {
+    display: none !important;
+  }
+
+  .musicIcon {
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    color: white !important;
+    animation: none !important;
+    font-size: 22px !important;
+  }
+
+  /* Section title mobile */
+  .section {
+    padding: 62px 0 !important;
+  }
+
+  .sectionTitle,
+  .sectionTitleLeft {
+    font-size: 32px !important;
+    line-height: 1.14 !important;
+    text-align: left !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .sectionSubtitle,
+  .countdownDesc {
+    margin: 12px 0 28px !important;
+    text-align: left !important;
+    font-size: 14px !important;
+    line-height: 1.72 !important;
+  }
+
+  /* Gallery: 2 ảnh 1 hàng, nhỏ và đều */
+  .galleryGrid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    scroll-snap-type: none !important;
+  }
+
+  .galleryItem {
+    flex: unset !important;
+    width: 100% !important;
+    min-height: unset !important;
+    aspect-ratio: 1 / 1.22 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 28px rgba(94, 14, 28, 0.1) !important;
+    transform: none !important;
+  }
+
+  .galleryItem:nth-child(2),
+  .galleryItem:nth-child(5) {
+    transform: none !important;
+  }
+
+  .galleryItem img {
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .galleryOverlay {
+    opacity: 1 !important;
+    transform: none !important;
+    background: linear-gradient(180deg, transparent 52%, rgba(70, 5, 16, 0.56)) !important;
+    place-items: end center !important;
+    padding-bottom: 12px !important;
+    font-size: 18px !important;
+  }
+
+  .galleryNote {
+    margin-top: 16px !important;
+    text-align: left !important;
+    font-size: 12.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Lời chúc: đẹp hơn, đỡ trống */
+  .guestMessages {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .wishCard {
+    display: flex !important;
+    min-height: 168px !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 16px !important;
+    border-radius: 22px !important;
+    background:
+      radial-gradient(circle at top left, rgba(139, 16, 36, 0.08), transparent 42%),
+      rgba(255, 255, 255, 0.88) !important;
+    box-shadow: 0 14px 34px rgba(94, 14, 28, 0.09) !important;
+  }
+
+  .wishAvatar {
+    width: 46px !important;
+    height: 46px !important;
+    margin: 0 !important;
+    border-radius: 18px !important;
+    background: rgba(139, 16, 36, 0.08) !important;
+    color: #9b172c !important;
+    box-shadow: none !important;
+    font-size: 17px !important;
+  }
+
+  .wishContent strong {
+    display: block !important;
+    margin-bottom: 7px !important;
+    color: #9b172c !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+  }
+
+  .wishContent p {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    min-height: 38px !important;
+    color: #8b6d72 !important;
+    font-size: 13px !important;
+    line-height: 1.48 !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+  }
+
+  .wishContent small {
+    margin-top: auto !important;
+    color: #aa8a8f !important;
+    font-size: 12px !important;
+  }
+
+  .wishAction {
+    margin-top: 24px !important;
+  }
+
+  .wishAction .btnPrimary {
+    width: 100% !important;
+    min-height: 56px !important;
+    border-radius: 999px !important;
+  }
+
+  /* Footer mobile nhìn sang hơn */
+  .footer {
+    padding: 58px 22px 88px !important;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(212, 87, 99, 0.18), transparent 42%),
+      #64070d !important;
+    text-align: center !important;
+  }
+
+  .footerContent {
+    text-align: center !important;
+  }
+
+  .footerContent p:first-child {
+    font-family: 'Great Vibes', cursive !important;
+    font-size: 48px !important;
+    line-height: 1.02 !important;
+    color: white !important;
+  }
+
+  .footerSocial {
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .navMenu li {
+    font-size: 11.5px !important;
+    padding: 10px 2px !important;
+  }
+
+  .heroTitle {
+    font-size: clamp(56px, 18vw, 78px) !important;
+  }
+
+  .heroDate {
+    font-size: 13px !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .galleryGrid,
+  .guestMessages {
+    gap: 10px !important;
+  }
+
+  .wishCard {
+    min-height: 160px !important;
+    padding: 14px !important;
+    border-radius: 20px !important;
+  }
+
+  .wishAvatar {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .wishContent strong {
+    font-size: 14px !important;
+  }
+
+  .wishContent p {
+    font-size: 12.5px !important;
+  }
+
+  .footerContent p:first-child {
+    font-size: 44px !important;
+  }
+}
