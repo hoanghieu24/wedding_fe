@@ -2140,3 +2140,237 @@ textarea.field {
     transform: translateY(0);
   }
 }
+/* =========================
+   FIX ICON + MOBILE GRID
+   ========================= */
+
+/* Fix icon địa điểm bị mờ / mất */
+.venueIcon {
+  display: grid !important;
+  place-items: center !important;
+  width: 72px !important;
+  height: 72px !important;
+  margin: 0 auto 24px !important;
+  border-radius: 26px !important;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.8), transparent 36%),
+    linear-gradient(135deg, #fff0f2, #f6dfe3) !important;
+  color: var(--wine) !important;
+  box-shadow: inset 0 0 0 1px rgba(130, 20, 39, 0.08),
+              0 16px 34px rgba(130, 20, 39, 0.1) !important;
+}
+
+.venueIcon i {
+  display: inline-block !important;
+  color: var(--wine) !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  opacity: 1 !important;
+}
+
+/* Fix icon trong nút */
+.btnPrimary i,
+.btnOutline i,
+.submitBtn i,
+.venueBtn i,
+.playlistIcon i,
+.wishAvatar i,
+.bankIcon i,
+.footerSocial i,
+.galleryOverlay i,
+.musicIcon i,
+.navLogo i {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Nếu FontAwesome load rồi thì icon chắc chắn hiện */
+.venueBtn i {
+  color: inherit !important;
+  font-size: 14px !important;
+}
+
+/* Làm card địa điểm gọn, cân hơn desktop */
+.venueCard {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.venueCard p {
+  width: 100%;
+}
+
+/* Gallery desktop giữ đẹp */
+.galleryGrid {
+  align-items: stretch;
+}
+
+.galleryItem {
+  min-height: 360px;
+}
+
+/* =========================
+   MOBILE: 1 hàng 2 ảnh, 1 hàng 2 lời chúc
+   ========================= */
+
+@media (max-width: 768px) {
+  /* Venue icon mobile */
+  .venueIcon {
+    width: 58px !important;
+    height: 58px !important;
+    margin: 0 0 18px !important;
+    border-radius: 20px !important;
+  }
+
+  .venueIcon i {
+    font-size: 23px !important;
+  }
+
+  .venueCard {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* Gallery mobile: 2 ảnh / hàng, ảnh bé */
+  .galleryGrid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    scroll-snap-type: none !important;
+  }
+
+  .galleryItem {
+    flex: unset !important;
+    width: 100% !important;
+    min-height: unset !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1.25 !important;
+    border-radius: 20px !important;
+    scroll-snap-align: unset !important;
+    transform: none !important;
+  }
+
+  .galleryItem:nth-child(2),
+  .galleryItem:nth-child(5) {
+    transform: none !important;
+  }
+
+  .galleryItem:hover,
+  .galleryItem:nth-child(2):hover,
+  .galleryItem:nth-child(5):hover {
+    transform: translateY(-3px) !important;
+  }
+
+  .galleryItem img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .galleryOverlay {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    background: linear-gradient(180deg, transparent 48%, rgba(74, 7, 18, 0.58)) !important;
+    place-items: end center !important;
+    padding-bottom: 14px !important;
+    font-size: 20px !important;
+  }
+
+  .galleryNote {
+    margin-top: 18px !important;
+    text-align: left !important;
+    font-size: 12.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Lời chúc mobile: 2 card / hàng */
+  .guestMessages {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .wishCard {
+    display: block !important;
+    min-height: 190px !important;
+    padding: 14px !important;
+    border-radius: 20px !important;
+  }
+
+  .wishAvatar {
+    width: 42px !important;
+    height: 42px !important;
+    margin-bottom: 12px !important;
+    border-radius: 15px !important;
+    font-size: 16px !important;
+  }
+
+  .wishContent strong {
+    display: block !important;
+    margin-bottom: 7px !important;
+    font-size: 13.5px !important;
+    line-height: 1.35 !important;
+  }
+
+  .wishContent p {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    color: var(--muted) !important;
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    -webkit-line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+  }
+
+  .wishContent small {
+    margin-top: 8px !important;
+    font-size: 11px !important;
+  }
+
+  /* Cho section lời chúc gọn hơn trên mobile */
+  .wishAction {
+    margin-top: 24px !important;
+  }
+}
+
+/* Mobile nhỏ quá thì vẫn 2 cột nhưng gọn hơn */
+@media (max-width: 420px) {
+  .galleryGrid {
+    gap: 10px !important;
+  }
+
+  .galleryItem {
+    aspect-ratio: 1 / 1.22 !important;
+    border-radius: 18px !important;
+  }
+
+  .guestMessages {
+    gap: 10px !important;
+  }
+
+  .wishCard {
+    min-height: 180px !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .wishAvatar {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 14px !important;
+  }
+
+  .wishContent strong {
+    font-size: 13px !important;
+  }
+
+  .wishContent p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    -webkit-line-clamp: 4 !important;
+  }
+}
