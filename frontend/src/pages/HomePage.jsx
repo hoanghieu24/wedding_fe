@@ -11,33 +11,6 @@ const defaultGallery = [
   { id: 6, imageUrl: 'https://picsum.photos/id/168/800/920', title: 'Tình yêu vĩnh cửu' }
 ]
 
-const defaultSongs = [
-  { name: 'Lạ Lùng', artist: 'Vũ.' },
-  { name: 'Perfect', artist: 'Ed Sheeran' },
-  { name: 'Hơn Cả Yêu', artist: 'Đức Phúc' }
-]
-
-const bankAccounts = [
-  {
-    id: 1,
-    bankName: 'VietinBank',
-    accountName: 'Hoang Thi Thu Trang',
-    accountNumber: '106869089934',
-    note: 'Mừng cưới cô dâu chú rể',
-    qrImage:
-      'https://qr.sepay.vn/img?bank=VietinBank&acc=106869089934&template=qronly&amount=&des='
-  },
-  {
-    id: 2,
-    bankName: 'MB Bank',
-    accountName: 'TRAN THI B',
-    accountNumber: '0988776655',
-    note: 'Chúc mừng hạnh phúc',
-    qrImage:
-      'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=MBBANK-TRAN%20THI%20B-0988776655'
-  }
-]
-
 function parseWeddingDate(raw) {
   if (!raw) return new Date('2026-05-10T17:30:00+07:00')
 
@@ -47,6 +20,7 @@ function parseWeddingDate(raw) {
   }
 
   const maybe = new Date(raw)
+
   return Number.isNaN(maybe.getTime())
     ? new Date('2026-05-10T17:30:00+07:00')
     : maybe
@@ -61,10 +35,10 @@ function formatHeroDate(rawDate, location) {
     String(date.getFullYear())
   ]
 
-  return `⸻ ${parts.join(' · ')} — ${location || 'Nghệ An'} ⸻`
+  return `${parts.join(' · ')}${location ? ` · ${location}` : ''}`
 }
 
-const petals = Array.from({ length: 22 }, (_, i) => ({
+const petals = Array.from({ length: 18 }, (_, i) => ({
   id: i + 1,
   left: `${Math.random() * 100}%`,
   delay: `${Math.random() * 8}s`,
@@ -74,7 +48,12 @@ const petals = Array.from({ length: 22 }, (_, i) => ({
 }))
 
 export default function HomePage() {
-  const [data, setData] = useState({ site: {}, gallery: [], wishes: [] })
+  const [data, setData] = useState({
+    site: {},
+    gallery: [],
+    wishes: []
+  })
+
   const [wishModalOpen, setWishModalOpen] = useState(false)
 
   const [wish, setWish] = useState({
@@ -92,6 +71,7 @@ export default function HomePage() {
 
   const [feedback, setFeedback] = useState('')
   const [toast, setToast] = useState('')
+
   const [countdown, setCountdown] = useState({
     days: '00',
     hours: '00',
@@ -99,7 +79,6 @@ export default function HomePage() {
     seconds: '00'
   })
 
-  const [activeNav, setActiveNav] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [animateElements, setAnimateElements] = useState({})
   const [audioAllowed, setAudioAllowed] = useState(false)
@@ -107,13 +86,12 @@ export default function HomePage() {
   const [submittingRsvp, setSubmittingRsvp] = useState(false)
   const [submittingWish, setSubmittingWish] = useState(false)
 
-  const heroRef = useRef(null)
   const observerRef = useRef(null)
   const audioRef = useRef(null)
   const toastTimerRef = useRef(null)
 
   useEffect(() => {
-    document.title = 'Duy Trung ❤️ Thu Trang | Thiệp cưới sang trọng'
+    document.title = 'Duy Trung ❤️ Thu Trang'
   }, [])
 
   const showToast = useCallback((message) => {
@@ -125,7 +103,7 @@ export default function HomePage() {
 
     toastTimerRef.current = setTimeout(() => {
       setToast('')
-    }, 3200)
+    }, 3000)
   }, [])
 
   const load = useCallback(async () => {
@@ -134,7 +112,7 @@ export default function HomePage() {
       setData(res.data)
     } catch (error) {
       console.error('Lỗi tải dữ liệu:', error)
-      showToast('Không tải được dữ liệu. Đang hiển thị nội dung mẫu.')
+      showToast('Đang hiển thị nội dung mẫu.')
     }
   }, [showToast])
 
@@ -157,21 +135,15 @@ export default function HomePage() {
     : [
         {
           id: 1,
-          fullName: 'Cô dâu chú rể',
-          message: 'Chúc tình yêu bền lâu, dịu dàng và hạnh phúc mãi mãi. ❤️',
+          fullName: 'Bạn bè',
+          message: 'Chúc hai bạn trăm năm hạnh phúc.',
           createdAt: '2024-01-15'
         },
         {
           id: 2,
           fullName: 'Gia đình',
-          message: 'Chúc hai con luôn yêu thương, trân trọng và nắm tay nhau thật lâu.',
+          message: 'Mong hai con luôn yêu thương và đồng hành cùng nhau.',
           createdAt: '2024-01-20'
-        },
-        {
-          id: 3,
-          fullName: 'Bạn bè',
-          message: 'Một hành trình mới thật đẹp đang bắt đầu. Chúc hai bạn thật viên mãn.',
-          createdAt: '2024-01-25'
         }
       ]
 
@@ -182,6 +154,25 @@ export default function HomePage() {
 
     return site.heroTitle || 'Duy Trung & Thu Trang'
   }, [site])
+
+  const venueItems = [
+    {
+      icon: 'fa-solid fa-ring',
+      title: site.ceremonyTitle || 'Lễ thành hôn',
+      location: site.ceremonyPlaceName || site.weddingLocation || 'Tư gia nhà trai',
+      address: site.ceremonyAddress || 'Địa chỉ sẽ được cập nhật',
+      time: site.ceremonyTime || '15:30',
+      mapUrl: site.ceremonyMapUrl || site.weddingMapUrl
+    },
+    {
+      icon: 'fa-solid fa-champagne-glasses',
+      title: site.receptionTitle || 'Tiệc cưới',
+      location: site.receptionPlaceName || 'Nhà hàng tiệc cưới',
+      address: site.receptionAddress || 'Địa chỉ sẽ được cập nhật',
+      time: site.receptionTime || '18:00',
+      mapUrl: site.receptionMapUrl || site.weddingMapUrl
+    }
+  ]
 
   useEffect(() => {
     const allowAudio = () => {
@@ -209,9 +200,7 @@ export default function HomePage() {
       audioRef.current
         .play()
         .then(() => setMusicPlaying(true))
-        .catch((err) => {
-          console.log('Không thể phát nhạc tự động:', err)
-        })
+        .catch(() => {})
     }
   }, [audioAllowed, site.backgroundMusicUrl])
 
@@ -234,7 +223,7 @@ export default function HomePage() {
           setAudioAllowed(true)
         })
         .catch(() => {
-          showToast('Bạn hãy chạm lại một lần nữa để bật nhạc nhé.')
+          showToast('Chạm lại một lần nữa để bật nhạc nhé.')
         })
     }
   }, [musicPlaying, showToast])
@@ -252,7 +241,7 @@ export default function HomePage() {
         })
       },
       {
-        threshold: 0.2,
+        threshold: 0.15,
         rootMargin: '0px'
       }
     )
@@ -270,21 +259,10 @@ export default function HomePage() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
-
-      const sections = ['loveStory', 'venues', 'rsvp']
-      const scrollPos = window.scrollY + 100
-
-      for (const section of sections) {
-        const el = document.getElementById(section)
-
-        if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) {
-          setActiveNav(section)
-          break
-        }
-      }
     }
 
     window.addEventListener('scroll', handleScroll)
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -324,11 +302,34 @@ export default function HomePage() {
     return () => clearInterval(timer)
   }, [site.weddingDate])
 
+  const scrollToSection = useCallback((id) => {
+    const element = document.getElementById(id)
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }, [])
+
+  const openMap = useCallback(
+    (url) => {
+      if (!url) {
+        showToast('Bản đồ sẽ được cập nhật sớm.')
+        return
+      }
+
+      window.open(url, '_blank')
+    },
+    [showToast]
+  )
+
   const submitRsvp = async (e) => {
     e.preventDefault()
 
     if (!rsvp.guestName.trim()) {
-      showToast('Vui lòng nhập họ tên để xác nhận.')
+      showToast('Vui lòng nhập họ tên.')
       return
     }
 
@@ -337,13 +338,7 @@ export default function HomePage() {
 
       await api.post('/public/rsvp', rsvp)
 
-      const messageMap = {
-        GOING: `🎉 Cảm ơn ${rsvp.guestName}, bạn đã xác nhận tham dự ( bạn đã gửi lời chúc riêng tư , nếu muốn công khai hãy xuống cuối trang để chúc công khai , xin cảm ơn ) !`,
-        MAYBE: `✨ Cảm ơn ${rsvp.guestName}, chúng tôi sẽ chờ tin bạn nhé.( bạn đã gửi lời chúc riêng tư , nếu muốn công khai hãy xuống cuối trang để chúc công khai , xin cảm ơn ) `,
-        NOT_GOING: `💌 Cảm ơn ${rsvp.guestName}, tình cảm của bạn vẫn luôn trọn vẹn.( bạn đã gửi lời chúc riêng tư , nếu muốn công khai hãy xuống cuối trang để chúc công khai , xin cảm ơn ) `
-      }
-
-      setFeedback(messageMap[rsvp.attendanceStatus] || 'Đã gửi xác nhận thành công.')
+      setFeedback('Cảm ơn bạn đã xác nhận tham dự.')
       showToast('Gửi xác nhận thành công.')
 
       setRsvp({
@@ -354,9 +349,9 @@ export default function HomePage() {
         note: ''
       })
 
-      setTimeout(() => setFeedback(''), 4200)
+      setTimeout(() => setFeedback(''), 4000)
     } catch (error) {
-      showToast('Có lỗi xảy ra, vui lòng thử lại sau.')
+      showToast('Có lỗi xảy ra, vui lòng thử lại.')
     } finally {
       setSubmittingRsvp(false)
     }
@@ -382,69 +377,13 @@ export default function HomePage() {
 
       setWishModalOpen(false)
       load()
-      showToast('Cảm ơn lời chúc tốt đẹp của bạn!')
+      showToast('Cảm ơn lời chúc của bạn.')
     } catch (error) {
-      showToast('Có lỗi xảy ra, vui lòng thử lại sau.')
+      showToast('Có lỗi xảy ra, vui lòng thử lại.')
     } finally {
       setSubmittingWish(false)
     }
   }
-
-  const openMap = useCallback(
-    (url) => {
-      if (!url) {
-        showToast('Bản đồ sẽ được cập nhật sớm.')
-        return
-      }
-
-      window.open(url, '_blank')
-    },
-    [showToast]
-  )
-
-  const scrollToSection = useCallback((id) => {
-    const element = document.getElementById(id)
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
-
-      setActiveNav(id)
-    }
-  }, [])
-
-  const copyBankNumber = useCallback(
-    async (accountNumber) => {
-      try {
-        await navigator.clipboard.writeText(accountNumber)
-        showToast('Đã sao chép số tài khoản.')
-      } catch (error) {
-        showToast('Không thể sao chép, bạn vui lòng copy thủ công nhé.')
-      }
-    },
-    [showToast]
-  )
-
-  const venueItems = [
-    {
-      icon: 'fa-solid fa-church',
-      title: site.ceremonyTitle || 'Lễ thành hôn',
-      location: site.ceremonyPlaceName || site.weddingLocation || 'Nhà thờ Lớn Hà Nội',
-      address: site.ceremonyAddress || '40 Nhà Chung, Hoàn Kiếm',
-      time: site.ceremonyTime || '15:30 - 17:00',
-      mapUrl: site.ceremonyMapUrl || site.weddingMapUrl
-    },
-    {
-      icon: 'fa-solid fa-champagne-glasses',
-      title: site.receptionTitle || 'Tiệc cưới',
-      location: site.receptionPlaceName || 'Khách sạn Metropole · Grand Ballroom',
-      address: site.receptionAddress || '15 Lý Thường Kiệt, Hà Nội',
-      time: site.receptionTime || '18:00 - 22:00',
-      mapUrl: site.receptionMapUrl || site.weddingMapUrl
-    }
-  ]
 
   return (
     <div className={styles.app}>
@@ -466,31 +405,14 @@ export default function HomePage() {
           </div>
 
           <ul className={styles.navMenu}>
-            <li
-              className={activeNav === 'loveStory' ? styles.active : ''}
-              onClick={() => scrollToSection('loveStory')}
-            >
-              Chuyện tình
-            </li>
-
-            <li
-              className={activeNav === 'venues' ? styles.active : ''}
-              onClick={() => scrollToSection('venues')}
-            >
-              Địa điểm
-            </li>
-
-            <li
-              className={activeNav === 'rsvp' ? styles.active : ''}
-              onClick={() => scrollToSection('rsvp')}
-            >
-              Xác nhận
-            </li>
+            <li onClick={() => scrollToSection('venues')}>Địa điểm</li>
+            <li onClick={() => scrollToSection('gallery')}>Ảnh cưới</li>
+            <li onClick={() => scrollToSection('rsvp')}>Xác nhận</li>
           </ul>
         </div>
       </nav>
 
-      <header className={styles.hero} id="hero" ref={heroRef}>
+      <header className={styles.hero} id="hero">
         <div className={styles.heroOverlay} />
 
         <div className={styles.sparkleLayer}>
@@ -508,10 +430,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className={styles.coupleSilhouette}>
-          <div className={styles.brideGroomIcon}>💍</div>
-        </div>
-
         <div className={styles.heroContent}>
           <div
             className={`${styles.heroBadge} ${animateElements.hero ? styles.animated : ''}`}
@@ -522,12 +440,8 @@ export default function HomePage() {
             <span>Save the date</span>
           </div>
 
-          <br />
-
           <div className={styles.coupleLabel}>
-            <span className={styles.brideText}>Chú rể</span>
-            <span className={styles.heartDivider}>❤</span>
-            <span className={styles.groomText}>Cô dâu</span>
+            <span>Wedding Invitation</span>
           </div>
 
           <h1
@@ -543,8 +457,7 @@ export default function HomePage() {
             data-animate
             id="hero"
           >
-            {site.welcomeMessage ||
-              'Một lời hẹn giữa yêu thương, để cùng nhau chứng kiến khoảnh khắc đẹp nhất của chúng tôi trong sắc đỏ nồng nàn và hạnh phúc.'}
+            {site.welcomeMessage || 'Trân trọng mời bạn đến chung vui cùng chúng tôi.'}
           </p>
 
           <div
@@ -568,66 +481,20 @@ export default function HomePage() {
           </div>
         </div>
 
-        <button onClick={() => scrollToSection('loveStory')} className={styles.scrollDown}>
+        <button onClick={() => scrollToSection('countdown')} className={styles.scrollDown}>
           <i className="fa-solid fa-chevron-down" />
-          <span>Cuộn xuống</span>
         </button>
       </header>
 
       <main>
-        <section className={styles.section} id="loveStory">
-          <div className={styles.container}>
-            <div className={styles.storyGrid}>
-              <div
-                className={`${styles.glassCard} ${styles.storyCopy} ${
-                  animateElements.loveStory ? styles.fadeInUp : ''
-                }`}
-                data-animate
-                id="loveStory"
-              >
-              <h2 className={styles.sectionTitleLeft} style={{ fontSize: '30px' }}>
-  Chuyện tình mang sắc đỏ
-</h2>
-
-                <div className={styles.sectionDividerLeft}>
-                  <i className="fa-solid fa-heart" />
-                </div>
-
-                {(site.story ||
-                  'Duy Trung và Thu Trang – hai mảnh ghép tưởng chừng xa lạ lại tìm thấy nhau giữa vô vàn điều đẹp đẽ của cuộc sống. Từ những lần gặp gỡ bình dị, những cuộc trò chuyện dài và sự đồng hành chân thành, cả hai dần nhận ra mình chính là bến bờ bình yên của nhau.\n\nHành trình yêu thương được viết bằng những chuyến đi, tiếng cười và sự thấu hiểu. Và giờ đây, tình yêu ấy sẽ được đơm hoa trong ngày trọng đại, nơi gia đình và bạn bè cùng chứng kiến.'
-                )
-                  .split(/\n+/)
-                  .map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-
-                <p className={styles.quote}>
-                  <i className="fa-solid fa-heart" /> “Anh không cần một tình yêu hoàn hảo, anh chỉ cần em – người đồng hành trọn đời.”
-                </p>
-              </div>
-
-              <div
-                className={`${styles.storyMedia} ${animateElements.loveStory ? styles.fadeInUp : ''}`}
-                data-animate
-                id="loveStory"
-                style={{ animationDelay: '0.2s' }}
-              >
-                <img src={site.heroImageUrl || 'https://picsum.photos/id/104/900/1100'} alt={coupleNames} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.section}>
+        <section className={styles.section} id="countdown">
           <div className={styles.container}>
             <div className={styles.countdownWrap}>
-              <h2 className={styles.sectionTitle} data-animate id="countdown">
+              <h2 className={styles.sectionTitle} data-animate id="countdownTitle">
                 Ngày trọng đại
               </h2>
 
-              <p className={styles.countdownDesc}>
-                Chúng tôi rất mong được gặp bạn trong ngày hạnh phúc nhất của mình.
-              </p>
+              <p className={styles.countdownDesc}>Hẹn gặp bạn trong ngày cưới.</p>
 
               <div className={styles.timer}>
                 {[
@@ -637,9 +504,11 @@ export default function HomePage() {
                   ['Giây', countdown.seconds]
                 ].map(([label, value], idx) => (
                   <div
-                    className={`${styles.timerCard} ${animateElements.countdown ? styles.bounceIn : ''}`}
+                    className={`${styles.timerCard} ${
+                      animateElements.countdownTitle ? styles.bounceIn : ''
+                    }`}
                     data-animate
-                    id="countdown"
+                    id="countdownTitle"
                     key={label}
                     style={{ animationDelay: `${idx * 0.1}s` }}
                   >
@@ -654,20 +523,20 @@ export default function HomePage() {
 
         <section className={styles.section} id="venues">
           <div className={styles.container}>
-            <h2 className={styles.sectionTitle} data-animate id="venues">
-              Lễ cưới &amp; Tiệc mừng
+            <h2 className={styles.sectionTitle} data-animate id="venuesTitle">
+              Địa điểm
             </h2>
 
-            <p className={styles.sectionSubtitle}>
-              Mọi yêu thương sẽ hội tụ trong một ngày thật đẹp, tại những nơi lưu giữ khoảnh khắc thiêng liêng nhất của chúng tôi.
-            </p>
+            <p className={styles.sectionSubtitle}>Thông tin buổi lễ và tiệc mừng.</p>
 
             <div className={styles.venuesGrid}>
               {venueItems.map((venue, idx) => (
                 <div
-                  className={`${styles.venueCard} ${animateElements.venues ? styles.slideInUp : ''}`}
+                  className={`${styles.venueCard} ${
+                    animateElements.venuesTitle ? styles.slideInUp : ''
+                  }`}
                   data-animate
-                  id="venues"
+                  id="venuesTitle"
                   key={idx}
                   style={{ animationDelay: `${idx * 0.15}s` }}
                 >
@@ -690,62 +559,36 @@ export default function HomePage() {
                   </button>
                 </div>
               ))}
-
-              <div
-                className={`${styles.venueCard} ${animateElements.venues ? styles.slideInUp : ''}`}
-                data-animate
-                id="venues"
-                style={{ animationDelay: '0.3s' }}
-              >
-                <div className={styles.venueIcon}>
-                  <i className="fa-solid fa-qrcode" />
-                </div>
-
-                <h3>Mã QR check-in</h3>
-
-                <p>
-                  {site.qrDescription ||
-                    'Quét mã tại cửa để nhận ảnh cưới kỷ niệm và món quà lưu niệm nhỏ từ cô dâu chú rể.'}
-                </p>
-
-                <button
-                  className={styles.venueBtn}
-                  onClick={() => {
-                    if (site.qrImageUrl) {
-                      window.open(site.qrImageUrl, '_blank')
-                    } else {
-                      showToast('Mã QR sẽ được cập nhật sớm.')
-                    }
-                  }}
-                >
-                  <i className="fa-solid fa-image" /> {site.qrButtonText || 'Xem QR'}
-                </button>
-              </div>
             </div>
           </div>
         </section>
 
         {site.showGallery !== false && (
-          <section className={`${styles.section} ${styles.sectionSoft}`}>
+          <section className={`${styles.section} ${styles.sectionSoft}`} id="gallery">
             <div className={styles.container}>
-              <h2 className={styles.sectionTitle} data-animate id="gallery">
-                Khoảnh khắc đỏ
+              <h2 className={styles.sectionTitle} data-animate id="galleryTitle">
+                Khoảnh khắc
               </h2>
 
-              <div className={styles.sectionDivider} data-animate id="gallery">
+              <div className={styles.sectionDivider} data-animate id="galleryTitle">
                 <i className="fa-solid fa-camera" />
               </div>
 
               <div className={styles.galleryGrid}>
                 {gallery.map((item, index) => (
                   <div
-                    className={`${styles.galleryItem} ${animateElements.gallery ? styles.scaleIn : ''}`}
+                    className={`${styles.galleryItem} ${
+                      animateElements.galleryTitle ? styles.scaleIn : ''
+                    }`}
                     data-animate
-                    id="gallery"
+                    id="galleryTitle"
                     key={item.id || index}
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
-                    <img src={item.imageUrl || item} alt={item.title || `Khoảnh khắc ${index + 1}`} />
+                    <img
+                      src={item.imageUrl || item}
+                      alt={item.title || `Khoảnh khắc ${index + 1}`}
+                    />
 
                     <div className={styles.galleryOverlay}>
                       <i className="fa-regular fa-heart" />
@@ -753,112 +596,29 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-
-              <p className={styles.galleryNote}>
-                <i className="fa-solid fa-hashtag" /> #TrungTrangWedding — lưu giữ mọi khoảnh khắc yêu thương
-              </p>
             </div>
           </section>
         )}
-
-        {site.showMusic !== false && (
-          <section className={styles.section}>
-            <div className={styles.container}>
-              <div
-                className={`${styles.playlistCard} ${animateElements.music ? styles.fadeInUp : ''}`}
-                data-animate
-                id="music"
-              >
-                <div className={styles.playlistIcon}>
-                  <i className="fa-solid fa-headphones" />
-                </div>
-
-                <h3>Giai điệu trái tim</h3>
-
-                <p>{site.backgroundMusicTitle || 'Những bài hát Duy Trung & Thu Trang dành tặng nhau'}</p>
-
-                <div className={styles.playlistTags}>
-                  {(site.songs?.length ? site.songs : defaultSongs).map((song, idx) => (
-                    <div className={styles.playlistTag} key={idx}>
-                      <i className="fa-solid fa-music" />{' '}
-                      {typeof song === 'string' ? song : `${song.name} - ${song.artist}`}
-                    </div>
-                  ))}
-                </div>
-
-                <button className={styles.btnPrimary} onClick={toggleMusic}>
-                  <i className={`fa-solid ${musicPlaying ? 'fa-pause' : 'fa-play'}`} />
-                  {musicPlaying ? 'Tạm dừng nhạc' : 'Phát nhạc cưới'}
-                </button>
-              </div>
-            </div>
-          </section>
-        )}
-
-        <section className={`${styles.section} ${styles.sectionSoft}`}>
-          <div className={styles.container}>
-            <div className={styles.thanksGrid}>
-              <div
-                className={`${styles.thanksMedia} ${animateElements.thanks ? styles.slideInLeft : ''}`}
-                data-animate
-                id="thanks"
-              >
-                <img src={site.thanksImageUrl || 'https://picsum.photos/id/64/900/1100'} alt="Lời tri ân" />
-              </div>
-
-              <div
-                className={`${styles.glassCard} ${styles.thanksCopy} ${
-                  animateElements.thanks ? styles.slideInRight : ''
-                }`}
-                data-animate
-                id="thanks"
-              >
-                <h2 className={styles.sectionTitleLeft}>Lời tri ân</h2>
-
-                <div className={styles.sectionDividerLeft}>
-                  <i className="fa-solid fa-heart" />
-                </div>
-
-                <p>
-                  Gửi đến ông bà, cha mẹ, người thân và bạn bè yêu quý — cảm ơn vì tất cả sự yêu thương,
-                  chở che và đồng hành để chúng con trưởng thành như hôm nay.
-                </p>
-
-                <p>
-                  Cảm ơn những cái nắm tay, những lời chúc, những sự hiện diện âm thầm nhưng ấm áp trong suốt hành trình yêu thương của chúng con.
-                </p>
-
-                <p>
-                  Sự hiện diện của mọi người trong ngày trọng đại này chính là món quà quý giá nhất, là kỷ niệm mà chúng con sẽ luôn gìn giữ.
-                </p>
-
-                <p className={styles.quote}>
-                  “Tình yêu không chỉ là nhìn về phía nhau, mà còn cùng nhau nhìn về một hướng.”
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <section className={styles.section} id="rsvp">
           <div className={styles.container}>
             <h2 className={styles.sectionTitle} data-animate id="rsvpForm">
-              Xác nhận tham dự
+              Bạn sẽ đến chứ?
             </h2>
 
-            <p className={styles.sectionSubtitle}>
-              Hãy để lại lời xác nhận và những lời chúc ngọt ngào dành cho cô dâu chú rể.
-            </p>
+            <p className={styles.sectionSubtitle}>Gửi xác nhận để chúng mình chuẩn bị chu đáo hơn.</p>
 
             <div
-              className={`${styles.rsvpShell} ${animateElements.rsvpForm ? styles.fadeInUp : ''}`}
+              className={`${styles.rsvpShell} ${
+                animateElements.rsvpForm ? styles.fadeInUp : ''
+              }`}
               data-animate
               id="rsvpForm"
             >
               <div className={styles.rsvpDecor}>
                 <span>RSVP</span>
-                <strong>Hẹn gặp bạn trong ngày vui</strong>
-                <p>Một lời xác nhận nhỏ sẽ giúp cô dâu chú rể chuẩn bị chu đáo hơn.</p>
+                <strong>Hẹn gặp bạn</strong>
+                <p>Một lời xác nhận nhỏ là niềm vui rất lớn với chúng mình.</p>
               </div>
 
               <form className={styles.rsvpForm} onSubmit={submitRsvp}>
@@ -881,33 +641,34 @@ export default function HomePage() {
 
                 <select
                   className={styles.field}
-                  value={rsvp.attendanceType}
-                  onChange={(e) => setRsvp({ ...rsvp, attendanceType: e.target.value })}
+                  value={rsvp.attendanceStatus}
+                  onChange={(e) => setRsvp({ ...rsvp, attendanceStatus: e.target.value })}
                 >
-                  <option value="DIRECT">🥂 Tham dự trực tiếp</option>
-                  <option value="ONLINE">💻 Tham dự online</option>
+                  <option value="GOING">Tôi sẽ tham dự</option>
+                  <option value="MAYBE">Có thể sẽ đến</option>
+                  <option value="NOT_GOING">Rất tiếc không thể đến</option>
                 </select>
 
                 <select
                   className={styles.field}
-                  value={rsvp.attendanceStatus}
-                  onChange={(e) => setRsvp({ ...rsvp, attendanceStatus: e.target.value })}
+                  value={rsvp.attendanceType}
+                  onChange={(e) => setRsvp({ ...rsvp, attendanceType: e.target.value })}
                 >
-                  <option value="GOING">🥂 Chắc chắn tham dự</option>
-                  <option value="MAYBE">✨ Có thể sẽ đến</option>
-                  <option value="NOT_GOING">💌 Rất tiếc không thể tham dự</option>
+                  <option value="DIRECT">Tham dự trực tiếp</option>
+                  <option value="ONLINE">Tham dự online</option>
                 </select>
 
                 <textarea
                   className={styles.field}
-                  placeholder="Lời chúc tốt đẹp dành cho cô dâu chú rể..."
+                  placeholder="Lời nhắn cho cô dâu chú rể..."
                   rows="3"
                   value={rsvp.note}
                   onChange={(e) => setRsvp({ ...rsvp, note: e.target.value })}
                 />
 
                 <button type="submit" className={styles.submitBtn} disabled={submittingRsvp}>
-                  {submittingRsvp ? 'ĐANG GỬI...' : 'GỬI LỜI XÁC NHẬN'} <i className="fa-solid fa-heart" />
+                  {submittingRsvp ? 'Đang gửi...' : 'Gửi xác nhận'}
+                  <i className="fa-solid fa-heart" />
                 </button>
 
                 {feedback && <div className={styles.feedback}>{feedback}</div>}
@@ -916,77 +677,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className={`${styles.section} ${styles.sectionSoft}`}>
-          <div className={styles.container}>
-            <h2 className={styles.sectionTitle}>Mừng cưới</h2>
-
-            <p className={styles.sectionSubtitle}>
-              Nếu bạn muốn gửi quà mừng từ xa, có thể dùng một trong hai tài khoản dưới đây 💖
-            </p>
-
-            <div className={styles.bankGrid}>
-              {bankAccounts.map((bank) => (
-                <div key={bank.id} className={styles.bankCard}>
-                  <div className={styles.bankHeader}>
-                    <div className={styles.bankIcon}>
-                      <i className="fa-solid fa-building-columns" />
-                    </div>
-
-                    <div>
-                      <h3>{bank.bankName}</h3>
-                      <p>{bank.note}</p>
-                    </div>
-                  </div>
-
-                  <div className={styles.bankBody}>
-                    <div className={styles.bankQrWrap}>
-                      <img src={bank.qrImage} alt={`QR ${bank.bankName}`} className={styles.bankQr} />
-                    </div>
-
-                    <div className={styles.bankInfo}>
-                      <div className={styles.bankLine}>
-                        <span>Ngân hàng</span>
-                        <strong>{bank.bankName}</strong>
-                      </div>
-
-                      <div className={styles.bankLine}>
-                        <span>Chủ tài khoản</span>
-                        <strong>{bank.accountName}</strong>
-                      </div>
-
-                      <div className={styles.bankLine}>
-                        <span>Số tài khoản</span>
-                        <strong>{bank.accountNumber}</strong>
-                      </div>
-
-                      <button className={styles.copyBankBtn} onClick={() => copyBankNumber(bank.accountNumber)}>
-                        <i className="fa-regular fa-copy" /> Sao chép STK
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {site.showWishes !== false && (
-          <section className={`${styles.section} ${styles.sectionSoft}`}>
+          <section className={`${styles.section} ${styles.sectionSoft}`} id="wishes">
             <div className={styles.container}>
               <h2 className={styles.sectionTitle} style={{ marginBottom: 0 }}>
-                Lời chúc ngọt ngào
+                Lời chúc
               </h2>
 
               <p className={styles.sectionSubtitle} style={{ marginBottom: 20 }}>
-                Những lời chúc nhỏ sẽ làm ngày vui của chúng tôi thêm trọn vẹn.
+                Gửi một lời chúc nhỏ cho chúng mình.
               </p>
 
               <div className={styles.guestMessages}>
-                {wishes.slice(0, 9).map((item, index) => (
+                {wishes.slice(0, 6).map((item, index) => (
                   <div
-                    className={`${styles.wishCard} ${animateElements.wishes ? styles.fadeInUp : ''}`}
+                    className={`${styles.wishCard} ${
+                      animateElements.wishesTitle ? styles.fadeInUp : ''
+                    }`}
                     data-animate
-                    id="wishes"
+                    id="wishesTitle"
                     key={item.id || index}
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
@@ -997,7 +706,9 @@ export default function HomePage() {
                     <div className={styles.wishContent}>
                       <strong>{item.guestName || item.fullName || 'Khách mời'}</strong>
                       <p>{item.message}</p>
-                      {item.createdAt && <small>{new Date(item.createdAt).toLocaleDateString('vi-VN')}</small>}
+                      {item.createdAt && (
+                        <small>{new Date(item.createdAt).toLocaleDateString('vi-VN')}</small>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -1005,7 +716,7 @@ export default function HomePage() {
 
               <div className={styles.wishAction}>
                 <button className={styles.btnPrimary} onClick={() => setWishModalOpen(true)}>
-                  <i className="fa-solid fa-pen-fancy" /> Gửi lời chúc công khai
+                  <i className="fa-solid fa-pen-fancy" /> Gửi lời chúc
                 </button>
               </div>
             </div>
@@ -1015,21 +726,8 @@ export default function HomePage() {
 
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <p>{coupleNames} — Trân trọng cảm ơn sự hiện diện của bạn.</p>
-
-          <div className={styles.footerSocial}>
-            <i className="fa-brands fa-facebook" />
-            <i className="fa-brands fa-instagram" />
-            <i className="fa-solid fa-camera" />
-          </div>
-
-          <p>
-            <i className="fa-solid fa-camera" /> #TrungTrangWedding
-          </p>
-
-          <small>
-            Made with <i className="fa-solid fa-heart" style={{ color: '#e74c3c' }} /> — Hoàng Hiếu
-          </small>
+          <p>{coupleNames}</p>
+          <small>Thank you for being here.</small>
         </div>
       </footer>
 
@@ -1043,7 +741,7 @@ export default function HomePage() {
             </span>
 
             <span className={styles.musicText}>
-              {musicPlaying ? 'Đang phát nhạc' : 'Bật nhạc cưới'}
+              {musicPlaying ? 'Đang phát' : 'Bật nhạc'}
             </span>
           </button>
         </>
@@ -1054,6 +752,7 @@ export default function HomePage() {
           <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
               <h3>Gửi lời chúc</h3>
+
               <button className={styles.modalClose} onClick={() => setWishModalOpen(false)}>
                 ×
               </button>
@@ -1069,7 +768,7 @@ export default function HomePage() {
 
               <textarea
                 className={styles.field}
-                placeholder="Viết lời chúc tới Duy Trung & Thu Trang"
+                placeholder="Viết lời chúc..."
                 rows="4"
                 value={wish.message}
                 onChange={(e) => setWish({ ...wish, message: e.target.value.slice(0, 500) })}
@@ -1081,7 +780,11 @@ export default function HomePage() {
                   {submittingWish ? 'Đang gửi...' : 'Gửi ngay'}
                 </button>
 
-                <button type="button" className={styles.btnOutline} onClick={() => setWishModalOpen(false)}>
+                <button
+                  type="button"
+                  className={styles.btnOutline}
+                  onClick={() => setWishModalOpen(false)}
+                >
                   Đóng
                 </button>
               </div>
