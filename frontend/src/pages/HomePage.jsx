@@ -585,7 +585,7 @@ export default function HomePage() {
                 data-animate
                 id="loveStory"
               >
-              <h2 className={styles.sectionTitleLeft} style={{ fontSize: '100px' }}>
+              <h2 className={styles.sectionTitleLeft} style={{ fontSize: '30px' }}>
   Chuyện tình mang sắc đỏ
 </h2>
 
