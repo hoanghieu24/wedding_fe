@@ -338,9 +338,9 @@ export default function HomePage() {
       await api.post('/public/rsvp', rsvp)
 
       const messageMap = {
-        GOING: `🎉 Cảm ơn ${rsvp.guestName}, bạn đã xác nhận tham dự!`,
-        MAYBE: `✨ Cảm ơn ${rsvp.guestName}, chúng tôi sẽ chờ tin bạn nhé.`,
-        NOT_GOING: `💌 Cảm ơn ${rsvp.guestName}, tình cảm của bạn vẫn luôn trọn vẹn.`
+        GOING: `🎉 Cảm ơn ${rsvp.guestName}, bạn đã xác nhận tham dự ( bạn đã gửi lời chúc riêng tư , nếu muốn công khai hãy xuống cuối trang để chúc công khai , xin cảm ơn ) !`,
+        MAYBE: `✨ Cảm ơn ${rsvp.guestName}, chúng tôi sẽ chờ tin bạn nhé.( bạn đã gửi lời chúc riêng tư , nếu muốn công khai hãy xuống cuối trang để chúc công khai , xin cảm ơn ) `,
+        NOT_GOING: `💌 Cảm ơn ${rsvp.guestName}, tình cảm của bạn vẫn luôn trọn vẹn.( bạn đã gửi lời chúc riêng tư , nếu muốn công khai hãy xuống cuối trang để chúc công khai , xin cảm ơn ) `
       }
 
       setFeedback(messageMap[rsvp.attendanceStatus] || 'Đã gửi xác nhận thành công.')
