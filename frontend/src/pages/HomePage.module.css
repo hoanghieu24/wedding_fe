@@ -79,7 +79,7 @@ img {
   color: var(--wine-dark);
   font-family: 'Playfair Display', serif;
   font-size: clamp(30px, 5vw, 64px);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.035em;
 }
